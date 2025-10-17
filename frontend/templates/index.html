@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tphagent - AI Hotel Marketing Strategy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-group input::placeholder {
+            color: #999;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 18px;
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .status {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            display: none;
+        }
+
+        .status.processing {
+            background: #e3f2fd;
+            border: 1px solid #2196f3;
+            color: #1976d2;
+        }
+
+        .status.success {
+            background: #e8f5e8;
+            border: 1px solid #4caf50;
+            color: #2e7d32;
+        }
+
+        .status.error {
+            background: #ffebee;
+            border: 1px solid #f44336;
+            color: #c62828;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e1e5e9;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .results {
+            margin-top: 30px;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .results h3 {
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #e1e5e9;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-label {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .result-value {
+            color: #666;
+        }
+
+        .download-btn {
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 15px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .download-btn:hover {
+            background: #45a049;
+        }
+
+        .features {
+            margin-top: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+        }
+
+        .feature {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .feature-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .feature h4 {
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .feature p {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .performance-info {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e8f4fd;
+            border-radius: 8px;
+            border-left: 4px solid #2196F3;
+            font-size: 0.9em;
+        }
+
+        .performance-info h4 {
+            margin: 0 0 10px 0;
+            color: #1976D2;
+        }
+
+        .performance-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 8px;
+            background: white;
+            border-radius: 4px;
+        }
+
+        .stat-value {
+            font-weight: bold;
+            color: #1976D2;
+        }
+
+        .stat-label {
+            font-size: 0.8em;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏨 tphagent</h1>
+            <p>AI-Powered Hotel Marketing Strategy Generator</p>
+            <p>Get personalized marketing strategies for your hotel in minutes</p>
+        </div>
+
+        <form id="analysisForm">
+            <div class="form-group">
+                <label for="email">📧 Your Email Address</label>
+                <input type="email" id="email" name="email" placeholder="your-email@example.com" required>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="hotel_url">🏨 Hotel Website URL</label>
+                    <input type="url" id="hotel_url" name="hotel_url" placeholder="https://yourhotel.com">
+                </div>
+                <div class="form-group">
+                    <label for="instagram_url">📸 Instagram Page (Optional)</label>
+                    <input type="url" id="instagram_url" name="instagram_url" placeholder="https://instagram.com/yourhotel">
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn">
+                🚀 Generate My Marketing Strategy
+            </button>
+        </form>
+
+        <div class="status" id="status">
+            <div id="statusMessage">Processing...</div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div id="timeInfo" style="margin-top: 10px; font-size: 0.9em; color: #666;"></div>
+        </div>
+
+        <div class="performance-info" id="performanceInfo" style="display: none;">
+            <h4>⚡ Performance Metrics</h4>
+            <div class="performance-stats" id="performanceStats">
+                <!-- Performance stats will be loaded here -->
+            </div>
+        </div>
+
+        <div class="results" id="results">
+            <h3>🎉 Your Marketing Strategy is Ready!</h3>
+            <div id="resultsContent"></div>
+            <a href="#" class="download-btn" id="downloadBtn" style="display: none;">📥 Download Results</a>
+        </div>
+
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">🤖</div>
+                <h4>AI Analysis</h4>
+                <p>Advanced AI agents analyze your hotel and market</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">📊</div>
+                <h4>Data-Driven</h4>
+                <p>Based on real market data and competitor analysis</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🎯</div>
+                <h4>Personalized</h4>
+                <p>Tailored strategy for your specific hotel</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">⚡</div>
+                <h4>Fast Results</h4>
+                <p>Complete analysis in under 2 minutes</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('analysisForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const status = document.getElementById('status');
+        const statusMessage = document.getElementById('statusMessage');
+        const progressFill = document.getElementById('progressFill');
+        const results = document.getElementById('results');
+        const resultsContent = document.getElementById('resultsContent');
+        const downloadBtn = document.getElementById('downloadBtn');
+
+        let currentRequestId = null;
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(form);
+            const data = {
+                email: formData.get('email'),
+                hotel_url: formData.get('hotel_url'),
+                instagram_url: formData.get('instagram_url')
+            };
+
+            // Validate that at least one URL is provided
+            if (!data.hotel_url && !data.instagram_url) {
+                alert('Please provide either a hotel URL or Instagram page');
+                return;
+            }
+
+            // Show loading state
+            submitBtn.disabled = true;
+            submitBtn.textContent = '🔄 Analyzing...';
+            status.style.display = 'block';
+            status.className = 'status processing';
+            results.style.display = 'none';
+
+            try {
+                const response = await fetch('/analyze', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    currentRequestId = result.request_id;
+                    statusMessage.textContent = 'Analysis started successfully!';
+                    checkStatus();
+                } else {
+                    throw new Error(result.error || 'Analysis failed');
+                }
+            } catch (error) {
+                showError('Error starting analysis: ' + error.message);
+            }
+        });
+
+        let pollInterval = 1000; // Start with 1 second polling
+        let maxPollInterval = 5000; // Max 5 seconds
+        let pollCount = 0;
+
+        async function checkStatus() {
+            if (!currentRequestId) return;
+
+            try {
+                const response = await fetch(`/status/${currentRequestId}`);
+                const statusData = await response.json();
+
+                statusMessage.textContent = statusData.message;
+                progressFill.style.width = statusData.progress + '%';
+
+                // Show elapsed time if available
+                if (statusData.elapsed_time) {
+                    const timeInfo = document.getElementById('timeInfo');
+                    if (timeInfo) {
+                        timeInfo.textContent = `Elapsed: ${statusData.elapsed_time}s`;
+                    }
+                }
+
+                if (statusData.status === 'completed') {
+                    showSuccess(statusData.results);
+                    // Show total time
+                    if (statusData.total_time) {
+                        const timeInfo = document.getElementById('timeInfo');
+                        if (timeInfo) {
+                            timeInfo.textContent = `Completed in ${statusData.total_time}s`;
+                        }
+                    }
+                } else if (statusData.status === 'error') {
+                    showError(statusData.message);
+                } else {
+                    // Adaptive polling - increase interval as time goes on
+                    pollCount++;
+                    if (pollCount > 10) {
+                        pollInterval = Math.min(pollInterval * 1.2, maxPollInterval);
+                    }
+                    
+                    // Continue checking with adaptive interval
+                    setTimeout(checkStatus, pollInterval);
+                }
+            } catch (error) {
+                showError('Error checking status: ' + error.message);
+            }
+        }
+
+        // Load performance metrics
+        async function loadPerformanceMetrics() {
+            try {
+                const response = await fetch('/performance');
+                const stats = await response.json();
+                
+                const performanceInfo = document.getElementById('performanceInfo');
+                const performanceStats = document.getElementById('performanceStats');
+                
+                performanceStats.innerHTML = `
+                    <div class="stat">
+                        <div class="stat-value">${stats.active_requests}</div>
+                        <div class="stat-label">Active</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">${stats.completed_requests}</div>
+                        <div class="stat-label">Completed</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">${stats.cache_size}</div>
+                        <div class="stat-label">Cached</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">${stats.thread_pool_size}</div>
+                        <div class="stat-label">Workers</div>
+                    </div>
+                `;
+                
+                performanceInfo.style.display = 'block';
+            } catch (error) {
+                console.log('Could not load performance metrics:', error);
+            }
+        }
+
+        function showSuccess(results) {
+            status.className = 'status success';
+            statusMessage.textContent = 'Analysis completed successfully!';
+            
+            // Load performance metrics when analysis completes
+            loadPerformanceMetrics();
+            
+            resultsContent.innerHTML = `
+                <div class="result-item">
+                    <span class="result-label">Hotel Name:</span>
+                    <span class="result-value">${results.hotel_name}</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Budget Tier:</span>
+                    <span class="result-value">${results.strategy.budget_tier}</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Monthly Budget:</span>
+                    <span class="result-value">$${results.strategy.monthly_budget.toLocaleString()}</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Target Audience:</span>
+                    <span class="result-value">${results.strategy.target_audience.join(', ')}</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Google Ads Budget:</span>
+                    <span class="result-value">$${results.strategy.allocation.google_ads.toLocaleString()}</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Social Media Budget:</span>
+                    <span class="result-value">$${results.strategy.allocation.social_media.toLocaleString()}</span>
+                </div>
+            `;
+
+            downloadBtn.href = `/download/${currentRequestId}`;
+            downloadBtn.style.display = 'inline-block';
+            results.style.display = 'block';
+
+            submitBtn.disabled = false;
+            submitBtn.textContent = '🚀 Generate My Marketing Strategy';
+        }
+
+        function showError(message) {
+            status.className = 'status error';
+            statusMessage.textContent = message;
+            
+            submitBtn.disabled = false;
+            submitBtn.textContent = '🚀 Generate My Marketing Strategy';
+        }
+    </script>
+</body>
+</html>

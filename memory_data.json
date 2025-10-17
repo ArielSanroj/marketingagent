@@ -1,0 +1,178 @@
+[
+  {
+    "id": "memory_1_1760088709",
+    "content": "Luxury hotels in Miami showing 15% increase in bookings during shoulder season",
+    "metadata": {
+      "type": "market_trends"
+    },
+    "timestamp": "2025-10-10T06:31:49.945583"
+  },
+  {
+    "id": "memory_2_1760088709",
+    "content": "Hotel diagnosis: The Grand Miami Resort - Miami Beach, FL",
+    "metadata": {
+      "type": "diagnosis",
+      "hotel": "The Grand Miami Resort"
+    },
+    "timestamp": "2025-10-10T06:31:49.945716"
+  },
+  {
+    "id": "memory_3_1760088709",
+    "content": "Campaign campaign_2 created successfully",
+    "metadata": {
+      "type": "campaign",
+      "campaign_id": "campaign_2"
+    },
+    "timestamp": "2025-10-10T06:31:49.945799"
+  },
+  {
+    "id": "memory_4_1760088779",
+    "content": "Hotel diagnosis: The Grand Miami Resort & Spa - Low occupancy issue",
+    "metadata": {
+      "type": "diagnosis",
+      "hotel": "The Grand Miami Resort & Spa",
+      "location": "Miami Beach, FL",
+      "issue": "low_occupancy"
+    },
+    "timestamp": "2025-10-10T06:32:59.596460"
+  },
+  {
+    "id": "memory_5_1760088779",
+    "content": "Luxury hotels in Miami showing 15% increase in bookings during shoulder season",
+    "metadata": {
+      "type": "research",
+      "category": "market_analysis"
+    },
+    "timestamp": "2025-10-10T06:32:59.596821"
+  },
+  {
+    "id": "memory_6_1760088779",
+    "content": "Competitors using targeted Google Ads with 3.5% CTR",
+    "metadata": {
+      "type": "research",
+      "category": "market_analysis"
+    },
+    "timestamp": "2025-10-10T06:32:59.597148"
+  },
+  {
+    "id": "memory_7_1760088779",
+    "content": "Shoulder season (April-May) shows 25% lower occupancy but higher ADR potential",
+    "metadata": {
+      "type": "research",
+      "category": "market_analysis"
+    },
+    "timestamp": "2025-10-10T06:32:59.597394"
+  },
+  {
+    "id": "memory_8_1760088779",
+    "content": "Workflow completed for The Grand Miami Resort & Spa - Campaign campaign_1",
+    "metadata": {
+      "type": "workflow_result",
+      "hotel": "The Grand Miami Resort & Spa",
+      "campaign_id": "campaign_1",
+      "status": "completed"
+    },
+    "timestamp": "2025-10-10T06:32:59.597680"
+  },
+  {
+    "id": "memory_9_1760088779",
+    "content": "Hotel diagnosis: The Artisan Boutique Hotel - Pricing strategy issue",
+    "metadata": {
+      "type": "diagnosis",
+      "hotel": "The Artisan Boutique Hotel",
+      "location": "Fort Lauderdale, FL",
+      "issue": "pricing_strategy"
+    },
+    "timestamp": "2025-10-10T06:32:59.598040"
+  },
+  {
+    "id": "memory_10_1760088976",
+    "content": "Key West luxury hotels showing 22% increase in shoulder season bookings",
+    "metadata": {
+      "type": "research",
+      "category": "market_analysis"
+    },
+    "timestamp": "2025-10-10T06:36:16.777989"
+  },
+  {
+    "id": "memory_11_1760088977",
+    "content": "Competitor analysis: Average CTR of 3.8% for luxury resort keywords",
+    "metadata": {
+      "type": "research",
+      "category": "market_analysis"
+    },
+    "timestamp": "2025-10-10T06:36:17.281084"
+  },
+  {
+    "id": "memory_12_1760088977",
+    "content": "Shoulder season demand patterns: 40% increase in weekend bookings",
+    "metadata": {
+      "type": "research",
+      "category": "market_analysis"
+    },
+    "timestamp": "2025-10-10T06:36:17.782009"
+  },
+  {
+    "id": "memory_13_1760088978",
+    "content": "Target audience: Affluent couples aged 35-55 seeking romantic getaways",
+    "metadata": {
+      "type": "research",
+      "category": "market_analysis"
+    },
+    "timestamp": "2025-10-10T06:36:18.287799"
+  },
+  {
+    "id": "memory_14_1760088978",
+    "content": "Peak booking times: Tuesday-Thursday for weekend stays",
+    "metadata": {
+      "type": "research",
+      "category": "market_analysis"
+    },
+    "timestamp": "2025-10-10T06:36:18.791511"
+  },
+  {
+    "id": "memory_15_1760089019",
+    "content": "Key West luxury hotels showing 22% increase in shoulder season bookings",
+    "metadata": {
+      "type": "research",
+      "category": "market_analysis"
+    },
+    "timestamp": "2025-10-10T06:36:59.519637"
+  },
+  {
+    "id": "memory_16_1760089020",
+    "content": "Competitor analysis: Average CTR of 3.8% for luxury resort keywords",
+    "metadata": {
+      "type": "research",
+      "category": "market_analysis"
+    },
+    "timestamp": "2025-10-10T06:37:00.025605"
+  },
+  {
+    "id": "memory_17_1760089020",
+    "content": "Shoulder season demand patterns: 40% increase in weekend bookings",
+    "metadata": {
+      "type": "research",
+      "category": "market_analysis"
+    },
+    "timestamp": "2025-10-10T06:37:00.527486"
+  },
+  {
+    "id": "memory_18_1760089021",
+    "content": "Target audience: Affluent couples aged 35-55 seeking romantic getaways",
+    "metadata": {
+      "type": "research",
+      "category": "market_analysis"
+    },
+    "timestamp": "2025-10-10T06:37:01.030259"
+  },
+  {
+    "id": "memory_19_1760089021",
+    "content": "Peak booking times: Tuesday-Thursday for weekend stays",
+    "metadata": {
+      "type": "research",
+      "category": "market_analysis"
+    },
+    "timestamp": "2025-10-10T06:37:01.533999"
+  }
+]

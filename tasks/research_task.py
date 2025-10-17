@@ -1,0 +1,63 @@
+"""
+Market Research Task
+Defines the research task for the Market Researcher agent
+"""
+# No stub task - only use factory function
+
+def create_research_task(agent):
+    """Create research task with agent"""
+    try:
+        from crewai import Task
+        task = Task(
+            description="""Analyze the provided hotel diagnosis and conduct comprehensive market research including:
+            1. Identify current hospitality trends and market conditions
+            2. Analyze competitor pricing and positioning
+            3. Research guest segments and their preferences
+            4. Identify high-value keywords for Google Ads targeting
+            5. Assess seasonal demand patterns and opportunities
+            6. Review past performance data from memory if available
+            
+            Provide detailed analysis and recommendations based on your expertise in hospitality marketing.
+            Save all findings to memory for future reference by other agents.""",
+            agent=agent,
+            expected_output="""A comprehensive market research report containing:
+            - Market trend analysis with specific insights
+            - Competitor analysis with pricing benchmarks
+            - Guest segment profiles and preferences
+            - Recommended keyword list (10-15 keywords) with performance estimates
+            - Seasonal opportunity analysis
+            - Strategic recommendations for marketing approach
+            - Any relevant data retrieved from memory systems""",
+            context=["The eco-lodge in Nilo, Cundinamarca is experiencing low weekend occupancy from Bogotá visitors.", "Need to understand eco-tourism demand, Bogotá travel behavior, and opportunities for targeted marketing campaigns."],
+            output_file="market_research_report.md"
+        )
+        print("✅ Created real research task with agent")
+        return task
+    except Exception as e:
+        print(f"⚠️  Failed to create research task: {e}")
+        print("   Falling back to stub task")
+        # Create stub task as fallback
+        from utils.crewai_compat import create_task
+        return create_task(
+            description="""Analyze the provided hotel diagnosis and conduct comprehensive market research including:
+            1. Identify current hospitality trends and market conditions
+            2. Analyze competitor pricing and positioning
+            3. Research guest segments and their preferences
+            4. Identify high-value keywords for Google Ads targeting
+            5. Assess seasonal demand patterns and opportunities
+            6. Review past performance data from memory if available
+            
+            Provide detailed analysis and recommendations based on your expertise in hospitality marketing.
+            Save all findings to memory for future reference by other agents.""",
+            agent=agent,
+            expected_output="""A comprehensive market research report containing:
+            - Market trend analysis with specific insights
+            - Competitor analysis with pricing benchmarks
+            - Guest segment profiles and preferences
+            - Recommended keyword list (10-15 keywords) with performance estimates
+            - Seasonal opportunity analysis
+            - Strategic recommendations for marketing approach
+            - Any relevant data retrieved from memory systems""",
+            context=["The eco-lodge in Nilo, Cundinamarca is experiencing low weekend occupancy from Bogotá visitors.", "Need to understand eco-tourism demand, Bogotá travel behavior, and opportunities for targeted marketing campaigns."],
+            output_file="market_research_report.md"
+        )

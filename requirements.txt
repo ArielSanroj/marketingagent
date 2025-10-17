@@ -1,0 +1,15 @@
+crewai==0.1.32
+langchain
+langchain-community
+langchain-ollama
+pinecone-client
+google-ads
+huggingface-hub
+sentence-transformers
+python-dotenv
+openai>=1.7.1
+pydantic
+ollama
+# Additional dependencies for file handling and data processing
+pathlib
+typing-extensions
