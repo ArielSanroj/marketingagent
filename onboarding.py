@@ -12,6 +12,7 @@ sys.path.append('.')
 
 from utils.hotel_analyzer import HotelAnalyzer, analyze_hotel_from_url, analyze_instagram_from_url
 from utils.user_approval import UserApprovalInterface, MarketingStrategy
+from utils.validators import validate_and_sanitize_input, ValidationError
 from main import run_diagnosis_workflow
 
 class HotelOnboardingSystem:
@@ -77,7 +78,7 @@ class HotelOnboardingSystem:
             return None
     
     def _get_hotel_url(self) -> Optional[str]:
-        """Get hotel URL from user"""
+        """Get hotel URL from user with validation"""
         print("Please provide your hotel's website URL:")
         print("Examples:")
         print("  • https://www.yourhotel.com")
@@ -91,15 +92,20 @@ class HotelOnboardingSystem:
                 print("❌ Please enter a valid URL")
                 continue
             
-            # Basic URL validation
-            if not (url.startswith(('http://', 'https://')) or '.' in url):
-                print("❌ Please enter a valid URL format")
+            # Validate URL using our validation system
+            is_valid, sanitized_data, validation_results = validate_and_sanitize_input(
+                {'hotel_url': url}, 'onboarding'
+            )
+            
+            if not is_valid:
+                error_messages = [result.message for result in validation_results if not result.is_valid]
+                print(f"❌ Validation failed: {'; '.join(error_messages)}")
                 continue
             
-            return url
+            return sanitized_data['hotel_url']
     
     def _get_instagram_url(self) -> Optional[str]:
-        """Get Instagram URL from user (optional)"""
+        """Get Instagram URL from user (optional) with validation"""
         print("\nDo you have an Instagram page for your hotel? (Optional)")
         print("This will help us understand your visual branding and content strategy.")
         print()
@@ -109,13 +115,21 @@ class HotelOnboardingSystem:
             if not choice:
                 return None
             
-            if 'instagram.com' in choice or choice.startswith('@'):
-                if choice.startswith('@'):
-                    choice = f"https://instagram.com/{choice[1:]}"
-                return choice
-            else:
-                print("❌ Please enter a valid Instagram URL or @username")
+            # Handle @username format
+            if choice.startswith('@'):
+                choice = f"https://instagram.com/{choice[1:]}"
+            
+            # Validate Instagram URL using our validation system
+            is_valid, sanitized_data, validation_results = validate_and_sanitize_input(
+                {'instagram_url': choice}, 'onboarding'
+            )
+            
+            if not is_valid:
+                error_messages = [result.message for result in validation_results if not result.is_valid]
+                print(f"❌ Validation failed: {'; '.join(error_messages)}")
                 continue
+            
+            return sanitized_data['instagram_url']
     
     def _display_strategy_for_approval(self):
         """Display the marketing strategy for user review"""

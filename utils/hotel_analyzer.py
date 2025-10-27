@@ -36,12 +36,15 @@ class HotelAnalyzer:
         self.session.mount('http://', adapter)
         self.session.mount('https://', adapter)
         
-        # Cache for repeated requests
+        # Cache for repeated requests with size limit to prevent memory leaks
         self._cache = {}
         self._cache_lock = threading.Lock()
+        self._max_cache_size = 100  # Limit cache size
         
-        # Thread pool for parallel processing
+        # Thread pool for parallel processing with proper cleanup
         self._executor = concurrent.futures.ThreadPoolExecutor(max_workers=5)
+        self._executor_lock = threading.Lock()
+        self._shutdown = False
         
     def analyze_hotel_url(self, url: str) -> Dict[str, Any]:
         """Analyze a hotel website URL and extract marketing information"""
@@ -99,8 +102,16 @@ class HotelAnalyzer:
             # Generate marketing insights
             hotel_info.update(self._generate_marketing_insights(hotel_info))
             
-            # Cache the result
+            # Cache the result with size management
             with self._cache_lock:
+                # Remove oldest entries if cache is too large
+                if len(self._cache) >= self._max_cache_size:
+                    # Remove oldest 20% of entries
+                    items_to_remove = len(self._cache) // 5
+                    oldest_keys = list(self._cache.keys())[:items_to_remove]
+                    for key in oldest_keys:
+                        del self._cache[key]
+                
                 self._cache[url] = hotel_info
             
             print(f"✅ Successfully analyzed {domain}")
@@ -386,13 +397,42 @@ class HotelAnalyzer:
             insights['marketing_insights']['marketing_opportunities'].append('Review management needed')
         
         return insights
+    
+    def cleanup(self):
+        """Clean up resources to prevent memory leaks"""
+        try:
+            with self._executor_lock:
+                if not self._shutdown:
+                    self._executor.shutdown(wait=True)
+                    self._shutdown = True
+            
+            # Clear cache
+            with self._cache_lock:
+                self._cache.clear()
+            
+            # Close session
+            if hasattr(self, 'session'):
+                self.session.close()
+                
+        except Exception as e:
+            print(f"Error during cleanup: {e}")
+    
+    def __del__(self):
+        """Destructor to ensure cleanup"""
+        self.cleanup()
 
 def analyze_hotel_from_url(url: str) -> Dict[str, Any]:
     """Convenience function to analyze a hotel URL"""
     analyzer = HotelAnalyzer()
-    return analyzer.analyze_hotel_url(url)
+    try:
+        return analyzer.analyze_hotel_url(url)
+    finally:
+        analyzer.cleanup()
 
 def analyze_instagram_from_url(url: str) -> Dict[str, Any]:
     """Convenience function to analyze an Instagram URL"""
     analyzer = HotelAnalyzer()
-    return analyzer.analyze_instagram_page(url)
+    try:
+        return analyzer.analyze_instagram_page(url)
+    finally:
+        analyzer.cleanup()

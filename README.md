@@ -1,6 +1,21 @@
-# Hotel Sales Multi-Agent System
+# Marketing Agent System - Enterprise Edition
 
-A sophisticated multi-agent system built with CrewAI for hotel sales optimization, featuring Google Ads campaign creation and management. This system implements the unified framework from "A Survey on Large Language Model based Autonomous Agents" with specialized agents for market research, ad generation, performance optimization, and quality supervision.
+A comprehensive, production-ready multi-agent system built with CrewAI for hotel marketing automation. This enterprise-grade solution features advanced security, performance monitoring, comprehensive testing, and cloud deployment capabilities.
+
+## 🚀 Key Features
+
+### Core Functionality
+- **Multi-Agent Architecture**: Specialized agents for market research, ad generation, performance optimization, and quality supervision
+- **Google Ads Integration**: Full campaign creation, management, and optimization with both real API and simulator modes
+- **Hybrid Memory System**: Short-term (CrewAI) and long-term (Pinecone) memory with file-based fallback
+- **Web Interface**: Modern Flask-based frontend with real-time progress tracking
+
+### Enterprise Features
+- **🔒 Security**: Comprehensive input validation, secrets management, and XSS protection
+- **📊 Performance**: Advanced monitoring, memory leak prevention, and optimization
+- **🧪 Testing**: 80%+ test coverage with unit, integration, and performance tests
+- **☁️ Cloud Ready**: Docker containers, CI/CD pipeline, and multi-cloud deployment
+- **📚 Documentation**: Complete API docs, deployment guides, and architecture documentation
 
 ## 🏗️ Architecture
 

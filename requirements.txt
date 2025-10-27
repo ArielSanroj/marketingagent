@@ -1,3 +1,4 @@
+# Core dependencies
 crewai==0.1.32
 langchain
 langchain-community
@@ -10,6 +11,45 @@ python-dotenv
 openai>=1.7.1
 pydantic
 ollama
+
 # Additional dependencies for file handling and data processing
 pathlib
 typing-extensions
+
+# Security and encryption
+cryptography>=41.0.0
+
+# Web framework and HTTP
+flask>=2.3.0
+Flask-RESTX>=1.1.0
+flask-cors>=4.0.0
+requests>=2.31.0
+beautifulsoup4>=4.12.0
+lxml>=4.9.0
+
+# Async and concurrency
+aiohttp>=3.8.0
+
+# Testing dependencies
+pytest>=7.4.0
+pytest-cov>=4.1.0
+pytest-mock>=3.11.0
+pytest-asyncio>=0.21.0
+
+# Code quality
+black>=23.0.0
+flake8>=6.0.0
+mypy>=1.5.0
+isort>=5.12.0
+
+# Production dependencies
+gunicorn>=21.2.0
+psycopg2-binary>=2.9.0
+psycopg2>=2.9.0
+redis>=4.6.0
+psutil>=5.9.0
+
+# Cloud deployment
+boto3>=1.28.0
+azure-identity>=1.14.0
+azure-keyvault-secrets>=4.7.0

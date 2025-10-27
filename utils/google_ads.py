@@ -820,11 +820,6 @@ def get_ad_performance(campaign_id: str) -> str:
         return f"Campaign {campaign_id} performance: {json.dumps(performance, indent=2)}"
     except Exception as e:
         return f"Error getting performance data: {str(e)}"
-    try:
-        performance = google_ads_simulator.get_performance_data(campaign_id)
-        return json.dumps(performance, indent=2)
-    except Exception as e:
-        return f"Error getting ad performance: {str(e)}"
 
 def optimize_campaign(campaign_id: str, target_roas: float = 400) -> str:
     """Optimize a campaign's bidding strategy"""

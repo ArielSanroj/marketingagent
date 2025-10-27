@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketing Agent API Documentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            margin-bottom: 40px;
+            border-radius: 10px;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .nav {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .nav a {
+            color: #667eea;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        
+        .nav a:hover {
+            background: #667eea;
+            color: white;
+        }
+        
+        .section {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+        
+        .section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .endpoint {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .method {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-right: 10px;
+        }
+        
+        .method.post {
+            background: #28a745;
+            color: white;
+        }
+        
+        .method.get {
+            background: #007bff;
+            color: white;
+        }
+        
+        .method.put {
+            background: #ffc107;
+            color: black;
+        }
+        
+        .method.delete {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .endpoint-url {
+            font-family: 'Courier New', monospace;
+            background: #e9ecef;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .code-block pre {
+            margin: 0;
+        }
+        
+        .response-example {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        
+        .status-code {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .status-200 { background: #d4edda; color: #155724; }
+        .status-400 { background: #f8d7da; color: #721c24; }
+        .status-404 { background: #f8d7da; color: #721c24; }
+        .status-429 { background: #fff3cd; color: #856404; }
+        .status-500 { background: #f8d7da; color: #721c24; }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .feature-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .feature-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .interactive-demo {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .interactive-demo h4 {
+            color: #1976d2;
+            margin-bottom: 15px;
+        }
+        
+        .demo-form {
+            display: grid;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .demo-form input, .demo-form textarea {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .demo-form button {
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .demo-form button:hover {
+            background: #5a6fd8;
+        }
+        
+        .response-display {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 40px 0;
+            color: #666;
+            border-top: 1px solid #eee;
+            margin-top: 40px;
+        }
+        
+        @media (max-width: 768px) {
+            .nav ul {
+                flex-direction: column;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Marketing Agent API</h1>
+            <p>Comprehensive Hotel Marketing Analysis and Campaign Management</p>
+        </div>
+        
+        <nav class="nav">
+            <ul>
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#authentication">Authentication</a></li>
+                <li><a href="#endpoints">Endpoints</a></li>
+                <li><a href="#examples">Examples</a></li>
+                <li><a href="#interactive">Interactive Demo</a></li>
+                <li><a href="#swagger">Swagger UI</a></li>
+            </ul>
+        </nav>
+        
+        <section id="overview" class="section">
+            <h2>API Overview</h2>
+            <p>The Marketing Agent API provides comprehensive hotel marketing analysis and campaign management capabilities. Our API helps hotels optimize their online presence, create effective marketing campaigns, and maximize their return on investment.</p>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>🏨 Hotel Analysis</h4>
+                    <p>Analyze hotel websites and social media presence to understand market positioning and opportunities.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>📊 Market Research</h4>
+                    <p>Generate comprehensive market insights, competitor analysis, and target audience identification.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>🎯 Campaign Creation</h4>
+                    <p>Create and manage Google Ads campaigns with optimized keywords, budgets, and targeting.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>⚡ Performance Optimization</h4>
+                    <p>Monitor campaign performance and receive actionable optimization recommendations.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>🔒 Security & Rate Limiting</h4>
+                    <p>Advanced security features including rate limiting, DDoS protection, and input validation.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>📈 Real-time Monitoring</h4>
+                    <p>Comprehensive monitoring and health checks for system performance and reliability.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="authentication" class="section">
+            <h2>Authentication & Rate Limiting</h2>
+            <p>Currently, the API does not require authentication. Rate limiting is applied based on IP address to ensure fair usage and system stability.</p>
+            
+            <h3>Rate Limiting</h3>
+            <ul>
+                <li><strong>Default Rate Limit:</strong> 60 requests per minute, 1000 requests per hour</li>
+                <li><strong>Burst Limit:</strong> 10 requests per minute</li>
+                <li><strong>Block Duration:</strong> 5 minutes for violations</li>
+                <li><strong>DDoS Protection:</strong> Automatic detection and blocking of suspicious patterns</li>
+            </ul>
+            
+            <h3>Security Headers</h3>
+            <p>All responses include comprehensive security headers:</p>
+            <div class="code-block">
+                <pre>X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+Content-Security-Policy: default-src 'self'
+Referrer-Policy: strict-origin-when-cross-origin</pre>
+            </div>
+        </section>
+        
+        <section id="endpoints" class="section">
+            <h2>API Endpoints</h2>
+            
+            <div class="endpoint">
+                <h3><span class="method post">POST</span> /api/v1/analyze</h3>
+                <div class="endpoint-url">POST /api/v1/analyze</div>
+                <p>Analyze hotel and generate marketing strategy. This endpoint processes hotel websites and social media to create comprehensive marketing recommendations.</p>
+                
+                <h4>Request Body</h4>
+                <div class="code-block">
+                    <pre>{
+  "email": "user@example.com",
+  "hotel_url": "https://example-hotel.com",
+  "instagram_url": "https://instagram.com/examplehotel"
+}</pre>
+                </div>
+                
+                <h4>Response Examples</h4>
+                <div class="response-example">
+                    <span class="status-code status-200">200 OK</span>
+                    <div class="code-block">
+                        <pre>{
+  "request_id": "123e4567-e89b-12d3-a456-426614174000",
+  "status": "processing",
+  "message": "Analysis request submitted successfully",
+  "progress": 0,
+  "estimated_completion": "5-10 minutes"
+}</pre>
+                    </div>
+                </div>
+                
+                <div class="response-example">
+                    <span class="status-code status-400">400 Bad Request</span>
+                    <div class="code-block">
+                        <pre>{
+  "error": "Input validation failed",
+  "details": ["Invalid email format", "Hotel URL is required"],
+  "validation_results": [
+    {
+      "field": "email",
+      "message": "Invalid email format",
+      "severity": "error"
+    }
+  ]
+}</pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="endpoint">
+                <h3><span class="method get">GET</span> /api/v1/status/{request_id}</h3>
+                <div class="endpoint-url">GET /api/v1/status/123e4567-e89b-12d3-a456-426614174000</div>
+                <p>Get analysis status and progress information.</p>
+                
+                <h4>Response</h4>
+                <div class="code-block">
+                    <pre>{
+  "request_id": "123e4567-e89b-12d3-a456-426614174000",
+  "status": "processing",
+  "message": "Analysis in progress",
+  "progress": 75,
+  "estimated_completion": "2 minutes"
+}</pre>
+                </div>
+            </div>
+            
+            <div class="endpoint">
+                <h3><span class="method get">GET</span> /api/v1/results/{request_id}</h3>
+                <div class="endpoint-url">GET /api/v1/results/123e4567-e89b-12d3-a456-426614174000</div>
+                <p>Get complete analysis results including market analysis, marketing strategy, and campaign recommendations.</p>
+                
+                <h4>Response</h4>
+                <div class="code-block">
+                    <pre>{
+  "hotel_name": "Example Hotel",
+  "market_analysis": {
+    "target_audience": "Business travelers and tourists",
+    "competitors": ["Hotel A", "Hotel B"],
+    "market_opportunities": ["Digital marketing", "Social media presence"]
+  },
+  "marketing_strategy": {
+    "recommended_channels": ["Google Ads", "Facebook", "Instagram"],
+    "budget_allocation": {
+      "google_ads": 60,
+      "social_media": 30,
+      "content_marketing": 10
+    }
+  },
+  "google_ads_campaign": {
+    "campaign_name": "Example Hotel - Search Campaign",
+    "keywords": ["hotel near airport", "business hotel"],
+    "budget": 1000,
+    "target_roas": 400
+  },
+  "optimization_recommendations": [
+    "Improve website loading speed",
+    "Optimize for mobile devices",
+    "Add customer reviews section"
+  ]
+}</pre>
+                </div>
+            </div>
+            
+            <div class="endpoint">
+                <h3><span class="method get">GET</span> /api/v1/admin/rate-limit-stats</h3>
+                <div class="endpoint-url">GET /api/v1/admin/rate-limit-stats</div>
+                <p>Get rate limiting and security statistics (admin endpoint).</p>
+            </div>
+            
+            <div class="endpoint">
+                <h3><span class="method get">GET</span> /api/v1/monitoring/health</h3>
+                <div class="endpoint-url">GET /api/v1/monitoring/health</div>
+                <p>Health check endpoint for monitoring system status.</p>
+            </div>
+        </section>
+        
+        <section id="examples" class="section">
+            <h2>Usage Examples</h2>
+            
+            <h3>cURL Examples</h3>
+            
+            <h4>Analyze Hotel</h4>
+            <div class="code-block">
+                <pre>curl -X POST "http://localhost:5000/api/v1/analyze" \
+     -H "Content-Type: application/json" \
+     -d '{
+       "email": "user@example.com",
+       "hotel_url": "https://example-hotel.com",
+       "instagram_url": "https://instagram.com/examplehotel"
+     }'</pre>
+            </div>
+            
+            <h4>Check Status</h4>
+            <div class="code-block">
+                <pre>curl "http://localhost:5000/api/v1/status/123e4567-e89b-12d3-a456-426614174000"</pre>
+            </div>
+            
+            <h4>Get Results</h4>
+            <div class="code-block">
+                <pre>curl "http://localhost:5000/api/v1/results/123e4567-e89b-12d3-a456-426614174000"</pre>
+            </div>
+            
+            <h3>Python Example</h3>
+            <div class="code-block">
+                <pre>import requests
+
+# Analyze hotel
+response = requests.post('http://localhost:5000/api/v1/analyze', json={
+    'email': 'user@example.com',
+    'hotel_url': 'https://example-hotel.com',
+    'instagram_url': 'https://instagram.com/examplehotel'
+})
+
+request_id = response.json()['request_id']
+
+# Check status
+status_response = requests.get(f'http://localhost:5000/api/v1/status/{request_id}')
+print(status_response.json())
+
+# Get results when ready
+results_response = requests.get(f'http://localhost:5000/api/v1/results/{request_id}')
+print(results_response.json())</pre>
+            </div>
+        </section>
+        
+        <section id="interactive" class="section">
+            <h2>Interactive Demo</h2>
+            <div class="interactive-demo">
+                <h4>Test the API</h4>
+                <p>Try out the API endpoints with this interactive demo:</p>
+                
+                <div class="demo-form">
+                    <input type="email" id="demo-email" placeholder="Email address" value="user@example.com">
+                    <input type="url" id="demo-hotel-url" placeholder="Hotel URL" value="https://example-hotel.com">
+                    <input type="url" id="demo-instagram-url" placeholder="Instagram URL" value="https://instagram.com/examplehotel">
+                    <button onclick="testAnalyze()">Analyze Hotel</button>
+                </div>
+                
+                <div id="demo-response" class="response-display" style="display: none;"></div>
+            </div>
+        </section>
+        
+        <section id="swagger" class="section">
+            <h2>Interactive API Documentation</h2>
+            <p>For the complete interactive API documentation with Swagger UI, visit:</p>
+            <div class="code-block">
+                <pre>http://localhost:5001/docs/</pre>
+            </div>
+            <p>The Swagger UI provides:</p>
+            <ul>
+                <li>Interactive API testing</li>
+                <li>Request/response examples</li>
+                <li>Schema definitions</li>
+                <li>Authentication testing</li>
+                <li>Downloadable OpenAPI specification</li>
+            </ul>
+        </section>
+    </div>
+    
+    <footer class="footer">
+        <p>&copy; 2024 Marketing Agent API. All rights reserved.</p>
+        <p>Version 1.0.0 | <a href="mailto:support@marketingagent.com">Support</a></p>
+    </footer>
+    
+    <script>
+        function testAnalyze() {
+            const email = document.getElementById('demo-email').value;
+            const hotelUrl = document.getElementById('demo-hotel-url').value;
+            const instagramUrl = document.getElementById('demo-instagram-url').value;
+            
+            const responseDiv = document.getElementById('demo-response');
+            responseDiv.style.display = 'block';
+            responseDiv.textContent = 'Sending request...';
+            
+            // Simulate API call (in real implementation, this would call the actual API)
+            setTimeout(() => {
+                const mockResponse = {
+                    "request_id": "demo-" + Math.random().toString(36).substr(2, 9),
+                    "status": "processing",
+                    "message": "Analysis request submitted successfully",
+                    "progress": 0,
+                    "estimated_completion": "5-10 minutes"
+                };
+                
+                responseDiv.textContent = JSON.stringify(mockResponse, null, 2);
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
