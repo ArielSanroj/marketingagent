@@ -8,6 +8,7 @@ def create_ad_generation_task(agent):
     """Create ad generation task with agent"""
     try:
         from crewai import Task
+        from utils.marketing_instructions import INSTRUCTIONS_JSON
         task = Task(
             description="""Based on the market research findings, create compelling Google Ads campaigns including:
             1. Develop 3-5 high-converting headlines (max 30 characters each)
@@ -30,7 +31,12 @@ def create_ad_generation_task(agent):
             - Geographic and demographic targeting settings
             - Ad extensions and call-to-action recommendations
             - Campaign launch checklist and next steps""",
-            context=["Building on market research insights to create targeted campaigns for the eco-lodge in Nilo, Cundinamarca.", "Focus on high-intent eco-tourism keywords and ad copy that attracts Bogotá residents seeking warm-weather nature getaways."],
+            context=[
+                "Building on market research insights to create targeted campaigns for the eco-lodge in Nilo, Cundinamarca.",
+                "Focus on high-intent eco-tourism keywords and ad copy that attracts Bogotá residents seeking warm-weather nature getaways.",
+                "Instructions:",
+                INSTRUCTIONS_JSON
+            ],
             output_file="google_ads_campaign.md"
         )
         print("✅ Created real ad generation task with agent")

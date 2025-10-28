@@ -8,6 +8,7 @@ def create_research_task(agent):
     """Create research task with agent"""
     try:
         from crewai import Task
+        from utils.marketing_instructions import INSTRUCTIONS_JSON
         task = Task(
             description="""Analyze the provided hotel diagnosis and conduct comprehensive market research including:
             1. Identify current hospitality trends and market conditions
@@ -28,7 +29,12 @@ def create_research_task(agent):
             - Seasonal opportunity analysis
             - Strategic recommendations for marketing approach
             - Any relevant data retrieved from memory systems""",
-            context=["The eco-lodge in Nilo, Cundinamarca is experiencing low weekend occupancy from Bogotá visitors.", "Need to understand eco-tourism demand, Bogotá travel behavior, and opportunities for targeted marketing campaigns."],
+            context=[
+                "The eco-lodge in Nilo, Cundinamarca is experiencing low weekend occupancy from Bogotá visitors.",
+                "Need to understand eco-tourism demand, Bogotá travel behavior, and opportunities for targeted marketing campaigns.",
+                "Instructions:",
+                INSTRUCTIONS_JSON
+            ],
             output_file="market_research_report.md"
         )
         print("✅ Created real research task with agent")

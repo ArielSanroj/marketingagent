@@ -8,6 +8,7 @@ def create_optimization_task(agent):
     """Create optimization task with agent"""
     try:
         from crewai import Task
+        from utils.marketing_instructions import INSTRUCTIONS_JSON
         task = Task(
             description="""Analyze the created Google Ads campaign and optimize for maximum performance:
             1. Review campaign performance metrics and KPIs
@@ -32,7 +33,12 @@ def create_optimization_task(agent):
             - Quality score improvement plan
             - Expected performance improvements
             - Implementation timeline and next steps""",
-            context=["Optimizing the newly created Google Ads campaign to maximize eco-lodge bookings near Bogotá.", "Focus on attracting nature-focused weekend travelers and keeping occupancy high during dry season weekends."],
+            context=[
+                "Optimizing the newly created Google Ads campaign to maximize eco-lodge bookings near Bogotá.",
+                "Focus on attracting nature-focused weekend travelers and keeping occupancy high during dry season weekends.",
+                "Instructions:",
+                INSTRUCTIONS_JSON
+            ],
             output_file="optimization_report.md"
         )
         print("✅ Created real optimization task with agent")

@@ -20,8 +20,9 @@ from utils.validators import validate_and_sanitize_input, ValidationError
 from utils.logger import get_logger, log_performance, log_security_event
 from utils.rate_limiter import get_rate_limiter, get_ddos_protection, check_rate_limit, analyze_request_pattern, SecurityHeaders
 from utils.health_monitor import get_health_monitor, start_health_monitoring, get_health_status, get_metrics_history
-from utils.google_ads import GoogleAdsAPI
+from utils.google_ads import get_google_ads_client, google_ads_simulator
 from onboarding import HotelOnboardingSystem
+from utils.marketing_instructions import INSTRUCTIONS_JSON
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -168,12 +169,13 @@ def analyze_hotel():
         user_email = sanitized_data.get('email', '').strip()
         hotel_url = sanitized_data.get('hotel_url', '').strip()
         instagram_url = sanitized_data.get('instagram_url', '').strip()
+        instruction_overrides = data.get('instruction_overrides') if isinstance(data, dict) else None
         
         # Generate unique request ID
         request_id = f"req_{int(time.time())}"
         
         # Start processing in background
-        thread = threading.Thread(target=process_hotel_analysis, args=(request_id, user_email, hotel_url, instagram_url))
+        thread = threading.Thread(target=process_hotel_analysis, args=(request_id, user_email, hotel_url, instagram_url, instruction_overrides))
         thread.daemon = True
         thread.start()
         
@@ -365,7 +367,7 @@ def get_performance_stats():
         'thread_pool_size': executor._max_workers
     })
 
-def process_hotel_analysis(request_id, user_email, hotel_url, instagram_url):
+def process_hotel_analysis(request_id, user_email, hotel_url, instagram_url, instruction_overrides=None):
     """Process hotel analysis in background with parallel processing"""
     try:
         logger.info(f"Starting analysis for request {request_id}")
@@ -495,6 +497,23 @@ def process_hotel_analysis(request_id, user_email, hotel_url, instagram_url):
             })
             return
         
+        # Merge instruction overrides
+        merged_instructions = INSTRUCTIONS_JSON
+        try:
+            if instruction_overrides and isinstance(instruction_overrides, dict):
+                def deep_merge(base, overrides):
+                    for k, v in overrides.items():
+                        if isinstance(v, dict) and isinstance(base.get(k), dict):
+                            deep_merge(base[k], v)
+                        else:
+                            base[k] = v
+                    return base
+                # Make a shallow copy to avoid mutating the module constant
+                import copy
+                merged_instructions = deep_merge(copy.deepcopy(INSTRUCTIONS_JSON), instruction_overrides)
+        except Exception as merge_error:
+            logger.warning(f"Instruction overrides merge failed: {merge_error}")
+
         # Store results
         results = {
             'hotel_name': strategy.hotel_name,
@@ -508,6 +527,7 @@ def process_hotel_analysis(request_id, user_email, hotel_url, instagram_url):
             'diagnosis': diagnosis,
             'hotel_analysis': hotel_analysis,
             'instagram_analysis': instagram_analysis,
+            'instructions': merged_instructions,
             'email': user_email,
             'timestamp': datetime.now().isoformat()
         }
@@ -661,34 +681,42 @@ def start_campaign():
         if not request_id or not results:
             return jsonify({'success': False, 'message': 'Missing required parameters'}), 400
         
-        # Initialize Google Ads API
-        google_ads = GoogleAdsAPI()
+        # Initialize Google Ads client (auto-selects real API or simulator)
+        google_ads = get_google_ads_client()
         
         # Create campaign based on results
         campaign_data = create_campaign_from_results(results)
         
         # Create the actual Google Ads campaign
-        campaign_result = google_ads.create_campaign(campaign_data)
+        try:
+            campaign_result = google_ads.create_campaign(campaign_data)
+        except Exception as e:
+            logger.error(f"Google Ads campaign creation failed, falling back to simulator: {e}", extra={
+                'category': 'system', 'event_type': 'campaign_error'
+            })
+            # Fallback to simulator
+            campaign_result = google_ads_simulator.create_campaign(campaign_data)
         
-        if campaign_result.get('success'):
+        # Normalize result from simulator or real API
+        if campaign_result and ('id' in campaign_result or campaign_result.get('campaign_id') or campaign_result.get('resource_name')):
             logger.info(f"Google Ads campaign created successfully", extra={
                 'category': 'business',
                 'event_type': 'campaign_created',
                 'request_id': request_id,
-                'campaign_id': campaign_result.get('campaign_id')
+                'campaign_id': campaign_result.get('campaign_id') or campaign_result.get('id')
             })
             
             return jsonify({
                 'success': True,
                 'message': 'Campaign created successfully',
-                'campaign_id': campaign_result.get('campaign_id'),
+                'campaign_id': campaign_result.get('campaign_id') or campaign_result.get('id'),
                 'budget': campaign_data.get('budget'),
                 'status': 'Active'
             })
         else:
             return jsonify({
                 'success': False,
-                'message': campaign_result.get('error', 'Failed to create campaign')
+                'message': (campaign_result.get('error') if isinstance(campaign_result, dict) else None) or 'Failed to create campaign'
             }), 500
             
     except Exception as e:

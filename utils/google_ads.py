@@ -85,38 +85,33 @@ class GoogleAdsAPI:
             raise Exception("Google Ads API not initialized")
         
         try:
-            from google.ads.googleads.v22.services.services import campaign_service
-            from google.ads.googleads.v22.resources.types import campaign
-            import google.ads.googleads.v22.common.types as common_types
-            from google.ads.googleads.v22.enums.types import campaign_status
-            from google.ads.googleads.v22.enums.types import advertising_channel_type
-            from google.ads.googleads.v22.enums.types import bidding_strategy_type
-            
-            # Create campaign operation
-            campaign_operation = campaign_service.CampaignOperation()
-            campaign_operation.create = campaign.Campaign()
-            
-            # Set campaign properties
+            # Services and enums
+            campaign_service = self.client.get_service("CampaignService")
+            advertising_channel_type_enum = self.client.enums.AdvertisingChannelTypeEnum
+            campaign_status_enum = self.client.enums.CampaignStatusEnum
+
+            # Create campaign operation using get_type
+            campaign_operation = self.client.get_type("CampaignOperation")
             campaign_obj = campaign_operation.create
+
+            # Set basic properties
             campaign_obj.name = campaign_data.get('name', 'Hotel Campaign')
-            campaign_obj.advertising_channel_type = advertising_channel_type.AdvertisingChannelType.SEARCH
-            campaign_obj.status = campaign_status.CampaignStatus.PAUSED  # Start paused for review
-            campaign_obj.campaign_budget = f"customers/{self.customer_id}/campaignBudgets/{self._create_campaign_budget(campaign_data)}"
-            
-            # Set bidding strategy
-            if campaign_data.get('bidding_strategy') == 'TARGET_ROAS':
-                campaign_obj.target_roas = common_types.TargetRoas()
-                campaign_obj.target_roas.target_roas = campaign_data.get('target_roas', 400) / 100
-            
-            # Set geo targeting
-            if campaign_data.get('locations'):
-                campaign_obj.criterion_type_allowlist.append(common_types.CriterionType.GEOGRAPHIC)
-            
-            # Execute the operation
-            campaign_service_client = self.client.get_service("CampaignService")
-            response = campaign_service_client.mutate_campaigns(
+            campaign_obj.advertising_channel_type = advertising_channel_type_enum.SEARCH
+            campaign_obj.status = campaign_status_enum.PAUSED  # Start paused for review
+
+            # Budget
+            budget_id = self._create_campaign_budget(campaign_data)
+            campaign_obj.campaign_budget = (
+                f"customers/{self.customer_id}/campaignBudgets/{budget_id}"
+            )
+
+            # Optional: bidding strategy (keep minimal to avoid version field mismatches)
+            # Target ROAS strategies can be configured post-creation if needed
+
+            # Execute
+            response = campaign_service.mutate_campaigns(
                 customer_id=self.customer_id,
-                operations=[campaign_operation]
+                operations=[campaign_operation],
             )
             
             campaign_resource_name = response.results[0].resource_name
@@ -141,29 +136,21 @@ class GoogleAdsAPI:
     def _create_campaign_budget(self, campaign_data: Dict[str, Any]) -> str:
         """Create a campaign budget"""
         try:
-            from google.ads.googleads.v22.services.services import campaign_budget_service
-            from google.ads.googleads.v22.resources.types import campaign_budget
-            from google.ads.googleads.v22.enums.types import budget_type
-            from google.ads.googleads.v22.enums.types import budget_delivery_method
-            
-            # Create budget operation
-            budget_operation = campaign_budget_service.CampaignBudgetOperation()
-            budget_operation.create = campaign_budget.CampaignBudget()
-            
-            # Set budget properties
+            budget_service = self.client.get_service("CampaignBudgetService")
+            budget_operation = self.client.get_type("CampaignBudgetOperation")
             budget_obj = budget_operation.create
+
             budget_obj.name = f"{campaign_data.get('name', 'Hotel Campaign')} Budget"
-            budget_obj.delivery_method = budget_delivery_method.BudgetDeliveryMethod.STANDARD
-            budget_obj.amount_micros = int(campaign_data.get('budget', 1000) * 1_000_000)  # Convert to micros
-            budget_obj.type_ = budget_type.BudgetType.STANDARD
+            budget_obj.amount_micros = int(campaign_data.get('budget', 1000) * 1_000_000)
+            # Not explicitly shared by default
+            if hasattr(budget_obj, 'explicitly_shared'):
+                budget_obj.explicitly_shared = False
             
-            # Execute the operation
-            budget_service_client = self.client.get_service("CampaignBudgetService")
-            response = budget_service_client.mutate_campaign_budgets(
+            response = budget_service.mutate_campaign_budgets(
                 customer_id=self.customer_id,
-                operations=[budget_operation]
+                operations=[budget_operation],
             )
-            
+
             budget_resource_name = response.results[0].resource_name
             return budget_resource_name.split('/')[-1]
             
