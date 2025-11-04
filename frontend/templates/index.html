@@ -3,9 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Caspar Marketing Agent</title>
+    <title>Caspar | IA para hoteles que analiza, lanza y optimiza tus campañas</title>
+    <meta name="description" content="Caspar analiza tu hotel con IA, crea estrategias y lanza campañas reales en Google Ads para aumentar tus reservas directas.">
+    <link rel="canonical" href="/">
+    <meta property="og:title" content="Caspar Marketing Agent — IA para hoteles">
+    <meta property="og:description" content="Analiza, crea y lanza campañas reales en Google Ads. Resultados en minutos.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/">
+    <meta property="og:image" content="/static/og-caspar.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Caspar | IA para hoteles que analiza, lanza y optimiza tus campañas">
+    <meta name="twitter:description" content="Estrategias con IA + Google Ads. Sin agencias, sin complicaciones.">
+    <meta name="twitter:image" content="/static/og-caspar.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="/static/favicon.ico">
+    <link rel="apple-touch-icon" href="/static/apple-touch-icon.png">
+    <link rel="manifest" href="/static/manifest.json">
     <style>
         * {
             margin: 0;
@@ -26,6 +42,10 @@
             margin: 0 auto;
             padding: 20px;
         }
+        /* Accessibility */
+        :focus-visible { outline: 3px solid #6B5E51; outline-offset: 2px; border-radius: 6px; }
+        .skip-link { position: absolute; left: -9999px; top: auto; width: 1px; height: 1px; overflow: hidden; }
+        .skip-link:focus { left: 16px; top: 10px; width: auto; height: auto; padding: 8px 10px; background: #F9F6F2; border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; z-index: 1000; }
         
         .header {
             text-align: center;
@@ -49,7 +69,8 @@
             margin: 0;
             line-height: 1.1;
             text-transform: uppercase;
-            display: flex;
+            display: inline-flex;
+            white-space: nowrap;
             align-items: center;
             justify-content: center;
             gap: 4px;
@@ -127,13 +148,19 @@
             text-transform: uppercase;
         }
         
-        .header p {
-            font-size: 1.1rem;
-            color: #6B5E51;
-            opacity: 0.9;
-            font-weight: 400;
-            font-family: 'Inter', sans-serif;
-        }
+        .header p { font-size: 1.1rem; color: #6B5E51; opacity: 0.9; font-weight: 400; font-family: 'Inter', sans-serif; }
+
+        /* Hero content */
+        .hero { max-width: 980px; margin: 0 auto 24px; text-align: center; }
+        .hero h2 { font-size: 2.2rem; color: #6B5E51; margin: 12px 0 10px; font-weight: 700; }
+        .hero p.sub { font-size: 1.15rem; color: #6B5E51; opacity: 0.95; margin-bottom: 10px; }
+        .hero p.support { font-size: 0.95rem; color: #6B5E51; opacity: 0.85; margin-bottom: 16px; }
+        .hero-ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 8px; }
+        .btn-primary { background: #6B5E51; color: #fff; border: none; padding: 14px 22px; border-radius: 12px; font-weight: 700; cursor: pointer; box-shadow: 0 8px 20px rgba(107,94,81,0.18); transition: transform .15s ease, box-shadow .2s ease; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(107,94,81,0.22); }
+        .btn-secondary { background: transparent; color: #6B5E51; border: 2px solid rgba(107,94,81,0.25); padding: 12px 20px; border-radius: 12px; font-weight: 700; cursor: pointer; transition: transform .15s ease, box-shadow .2s ease; }
+        .btn-secondary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.06); }
+        .microcopy { font-size: 0.85rem; color: #6B5E51; opacity: 0.85; margin-top: 8px; }
         
         .main-content {
             display: grid;
@@ -365,7 +392,9 @@
             border-radius: 12px;
             padding: 16px;
             box-shadow: 0 6px 14px rgba(0,0,0,0.05);
+            transition: transform .15s ease, box-shadow .2s ease;
         }
+        .quick-card:hover { transform: translateY(-4px); box-shadow: 0 14px 28px rgba(0,0,0,0.08); }
         .quick-card h4 {
             margin: 0 0 6px 0;
             color: #6B5E51;
@@ -390,6 +419,88 @@
         .error-message { background: #fee2e2; color: #dc2626; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 4px solid #dc2626; }
         .success-message { background: #d1fae5; color: #059669; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 4px solid #059669; }
         
+        /* How Caspar Works */
+        .how-section { background: #F5F5F5; padding: 40px; border-radius: 20px; border: 1px solid rgba(0,0,0,0.05); }
+        .how-section h1 { color: #6B5E51; margin-bottom: 12px; font-size: 1.8rem; font-weight: 600; font-family: 'Inter', sans-serif; text-align: center; }
+        .how-section p.sub { text-align: center; max-width: 900px; margin: 0 auto 18px; }
+        .how-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 16px 0 8px; }
+        .how-card { background: #fff; border: 1px solid rgba(0,0,0,0.06); border-radius: 14px; padding: 18px; display: grid; grid-template-columns: 56px 1fr; gap: 12px; align-items: start; box-shadow: 0 10px 22px rgba(0,0,0,0.05); }
+        .how-icon { width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #D9C2A8 0%, #cbb296 100%); color: #fff; font-size: 1.2rem; }
+        .how-card h4 { margin: 0 0 6px 0; color: #6B5E51; font-weight: 700; font-family: 'Inter', sans-serif; }
+        .how-card p { margin: 0; color: #6B5E51; opacity: 0.95; }
+        @media (max-width: 900px) { .how-grid { grid-template-columns: 1fr; } }
+
+        /* Why Caspar Works */
+        .why-section {
+            background: #F5F5F5;
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(0,0,0,0.05);
+            margin-top: 24px;
+        }
+        .why-section h1 {
+            color: #6B5E51;
+            margin-bottom: 18px;
+            font-size: 1.8rem;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            text-align: center;
+        }
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+        }
+        .why-item {
+            background: #fff;
+            border: 1px solid rgba(0,0,0,0.06);
+            border-radius: 14px;
+            padding: 16px;
+            display: grid;
+            grid-template-columns: 48px 1fr;
+            align-items: start;
+            gap: 12px;
+            box-shadow: 0 10px 22px rgba(0,0,0,0.05);
+        }
+        .why-icon {
+            width: 48px; height: 48px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(135deg, #D9C2A8 0%, #cbb296 100%);
+            color: #fff; font-size: 1.1rem;
+        }
+        .why-item h4 { margin: 0 0 6px 0; color: #6B5E51; font-weight: 700; font-family: 'Inter', sans-serif; }
+        .why-item span { color: #6B5E51; opacity: 0.9; font-size: 0.98rem; }
+        @media (max-width: 900px) { .why-grid { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 600px) { .why-grid { grid-template-columns: 1fr; } }
+        
+        /* Testimonials */
+        .testimonials {
+            background: #F5F5F5;
+            padding: 34px;
+            border-radius: 20px;
+            border: 1px solid rgba(0,0,0,0.05);
+            margin-top: 24px;
+        }
+        .testimonials h1 { color: #6B5E51; margin-bottom: 16px; font-size: 1.6rem; font-weight: 600; font-family: 'Inter', sans-serif; text-align: center; }
+        .testimonial-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+        .testimonial-card {
+            background: #fff;
+            border: 1px solid rgba(0,0,0,0.06);
+            border-radius: 14px;
+            padding: 18px;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.05);
+            position: relative;
+        }
+        .testimonial-card::before {
+            content: "\f10d"; /* quote-left */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute; top: 12px; right: 12px; color: rgba(217,194,168,0.6);
+        }
+        .testimonial-text { color: #4a5568; line-height: 1.7; margin-bottom: 10px; }
+        .testimonial-author { color: #6B5E51; font-weight: 600; }
+        @media (max-width: 800px) { .testimonial-grid { grid-template-columns: 1fr; } }
+        
         .nav-links { position: fixed; top: 20px; right: 20px; display: flex; gap: 15px; }
         .nav-link { color: #6B5E51; text-decoration: none; padding: 10px 20px; background: rgba(0, 0, 0, 0.04); border-radius: 25px; backdrop-filter: blur(10px); transition: all 0.3s ease; font-weight: 600; }
         .nav-link:hover { background: rgba(0, 0, 0, 0.08); transform: translateY(-2px); }
@@ -398,7 +509,7 @@
         .footer a { color: #6B5E51; text-decoration: none; font-weight: 600; }
         .footer a:hover { text-decoration: underline; }
         
-        @media (max-width: 768px) { 
+        @media (max-width: 768px) {
             .main-content { grid-template-columns: 1fr; gap: 30px; } 
             .logo-main { font-size: 3rem; letter-spacing: 4px; }
             .logo-main .price-tag { width: 35px; height: 35px; }
@@ -408,7 +519,7 @@
             .form-section, .features-section { padding: 30px 20px; } 
             .nav-links { position: static; justify-content: center; margin-bottom: 30px; } 
         }
-        @media (max-width: 480px) { 
+        @media (max-width: 480px) {
             .container { padding: 10px; } 
             .logo-main { font-size: 2.2rem; letter-spacing: 2px; }
             .logo-main .price-tag { width: 28px; height: 28px; }
@@ -420,9 +531,10 @@
     </style>
 </head>
 <body>
+    <a href="#main" class="skip-link">Saltar al contenido principal</a>
     
     
-    <div class="container">
+    <div class="container" id="main" role="main">
         <div class="header">
             <div class="logo-container">
                 <div class="logo-main">
@@ -437,10 +549,64 @@
                 </div>
                 <div class="logo-sub">MARKETINGAGENT</div>
             </div>
-            <p>Transform your hotel presence with AI-generated marketing strategies tailored to your market needs</p>
+            <div class="hero">
+                <h1>El agente de marketing que llena tus habitaciones.</h1>
+                <p class="sub">Caspar usa IA para analizar tu hotel, crear estrategias personalizadas y lanzar campañas reales en Google Ads — automáticamente.</p>
+                <p class="support">+312 hoteles boutique y cadenas ya confían en Caspar para aumentar sus reservas directas.</p>
+                <p class="support" id="loopLine" aria-live="polite" style="font-weight:600;">Analiza → Genera → Lanza → Optimiza → Repite</p>
+                <div class="hero-ctas">
+                    <button class="btn-primary" id="ctaAnalyze">🚀 Analizar y lanzar mi campaña</button>
+                    <button class="btn-secondary" id="ctaExample">Ver informe de ejemplo</button>
+                </div>
+                <div class="microcopy">Sin registros ni tarjetas. Solo resultados en minutos.</div>
+            </div>
         </div>
         
         <div class="main-content">
+            
+            <div class="features-section">
+                <h1><i class="fas fa-star"></i> What We Analyze</h1>
+                <ul class="feature-list">
+                    <li>Benchmarking de competencia y posicionamiento de marca</li>
+                    <li>Optimización SEO y velocidad de tu sitio web</li>
+                    <li>Presencia y engagement en redes sociales</li>
+                    <li>Segmentación de audiencia ideal para tu hotel</li>
+                    <li>Recomendaciones de campañas en Google Ads</li>
+                    <li>Estrategias de asignación de presupuesto</li>
+                    <li>Consejos de optimización de rendimiento</li>
+                    <li>Sugerencias para mejorar el ROI</li>
+                </ul>
+            </div>
+
+            <div class="how-section">
+                <h1>De los datos a las reservas: Caspar lo hace por ti.</h1>
+                <p class="sub">Caspar Marketing Agent combina investigación, creatividad y ejecución. Analiza tu presencia online, detecta oportunidades y lanza campañas reales en Google Ads con segmentación, presupuesto y mensajes optimizados automáticamente.</p>
+                <div class="how-grid">
+                    <div class="how-card">
+                        <div class="how-icon"><i class="fas fa-magnifying-glass-chart"></i></div>
+                        <div>
+                            <h4>Analiza y aprende</h4>
+                            <p>Evalúa tu web, redes, competencia y rendimiento actual para entender dónde estás perdiendo reservas.</p>
+                        </div>
+                    </div>
+                    <div class="how-card">
+                        <div class="how-icon"><i class="fas fa-rocket"></i></div>
+                        <div>
+                            <h4>Crea y lanza campañas</h4>
+                            <p>Genera anuncios en Google Ads con copies y segmentación adaptados a tu mercado. Sin experiencia técnica.</p>
+                        </div>
+                    </div>
+                    <div class="how-card">
+                        <div class="how-icon"><i class="fas fa-gauge-high"></i></div>
+                        <div>
+                            <h4>Mide y optimiza</h4>
+                            <p>Supervisa resultados y ajusta presupuesto y creatividad para maximizar el ROI.</p>
+                        </div>
+                    </div>
+                </div>
+                <p class="microcopy" style="text-align:center;">Caspar convierte datos en reservas — sin agencias, sin reuniones, sin complicaciones.</p>
+            </div>
+            
             <div class="features-section">
                 <h1><i class="fas fa-star"></i> What We Analyze</h1>
                 <ul class="feature-list">
@@ -455,8 +621,8 @@
                 </ul>
             </div>
 
-            <div class="form-section">
-                <h2><i class="fas fa-hotel"></i> Analyze Your Hotel</h2>
+            <div class="form-section" id="formSection">
+                <h2><i class="fas fa-hotel"></i> Obtén tu análisis y lanza tu primera campaña con IA</h2>
                 <form id="analysisForm">
                     <div class="form-group">
                         <label for="email">
@@ -486,7 +652,7 @@
                     
                     <button type="submit" class="submit-btn" id="submitBtn">
                         <span class="btn-text">
-                            <i class="fas fa-rocket"></i> Start Analysis
+                            <i class="fas fa-rocket"></i> Obtener diagnóstico y lanzar campaña
                         </span>
                         <span class="loading" id="loading">
                             <div class="spinner"></div>
@@ -495,6 +661,8 @@
                     </button>
 
                 </form>
+                <p style="margin-top:12px; color:#6B5E51; opacity:0.9; text-align:center;">Recibirás tu análisis en menos de 5 minutos y, si lo apruebas, Caspar lanzará tu primera campaña automáticamente.</p>
+                <p style="margin-top:6px; color:#6B5E51; opacity:0.9; text-align:center;">🔒 Tu información es 100% privada y cifrada.</p>
                 
                 <div class="status-section" id="statusSection">
                     <div class="status-header">
@@ -516,9 +684,9 @@
                     <div class="results-header">
                         <h3 class="results-title">Analysis Results</h3>
                         <div class="action-buttons">
-                            <button class="download-btn" id="downloadBtn">
-                                <i class="fas fa-download"></i> Download Report
-                            </button>
+                        <button class="download-btn" id="downloadBtn">
+                            <i class="fas fa-download"></i> Download Report
+                        </button>
                             <button class="email-btn" id="emailBtn">
                                 <i class="fas fa-envelope"></i> Email Report
                             </button>
@@ -535,31 +703,107 @@
             
             <div class="quick-cards quick-cards-footer">
                 <div class="quick-card">
-                    <h4><i class="fas fa-brain"></i> AI-Powered Analysis</h4>
-                    <p>Advanced algorithms analyze your brand presence and competition</p>
+                    <h4><i class="fas fa-brain"></i> Análisis Inteligente</h4>
+                    <p>Algoritmos avanzados detectan oportunidades y ventajas competitivas</p>
                 </div>
                 <div class="quick-card">
-                    <h4><i class="fas fa-layer-group"></i> Multi-Platform Support</h4>
-                    <p>Works with hotel websites and Instagram profiles seamlessly</p>
+                    <h4><i class="fas fa-layer-group"></i> Soporte Multiplataforma</h4>
+                    <p>Funciona con tu web del hotel e Instagram de forma fluida</p>
                 </div>
                 <div class="quick-card">
-                    <h4><i class="fas fa-bolt"></i> Instant Delivery</h4>
-                    <p>Receive comprehensive strategies directly in your inbox</p>
+                    <h4><i class="fas fa-bolt"></i> Entrega Instantánea</h4>
+                    <p>Recibe estrategias e insumos listos para aprobar en minutos</p>
+                </div>
+            </div>
+
+            <div class="why-section">
+                <h1>¿Por qué Caspar funciona?</h1>
+                <div class="why-grid">
+                    <div class="why-item">
+                        <div class="why-icon"><i class="fas fa-brain"></i></div>
+                        <div>
+                            <h4>Análisis Inteligente</h4>
+                            <span>Tu asistente de marketing analiza a tus competidores y encuentra las oportunidades más rentables.</span>
+                        </div>
+                    </div>
+                    <div class="why-item">
+                        <div class="why-icon"><i class="fas fa-bullseye"></i></div>
+                        <div>
+                            <h4>Integración con Google Ads</h4>
+                            <span>Lanza campañas reales, optimizadas automáticamente según tu mercado y presupuesto.</span>
+                        </div>
+                    </div>
+                    <div class="why-item">
+                        <div class="why-icon"><i class="fas fa-bolt"></i></div>
+                        <div>
+                            <h4>Estrategia Instantánea</h4>
+                            <span>Recibe un plan y anuncios listos para aprobar en minutos.</span>
+                        </div>
+                    </div>
+                    <div class="why-item">
+                        <div class="why-icon"><i class="fas fa-shield-alt"></i></div>
+                        <div>
+                            <h4>Privacidad Total</h4>
+                            <span>Tus datos están cifrados y nunca se comparten.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonials">
+                <h1>Historias de éxito reales</h1>
+                <div class="testimonial-grid">
+                    <div class="testimonial-card">
+                        <div class="testimonial-text">“Caspar duplicó nuestras reservas directas en 6 semanas.”</div>
+                        <div class="testimonial-author">Hotel Estelar · Gerente de Marketing</div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-text">“Nunca imaginé que un sistema pudiera lanzar y optimizar anuncios sin agencia.”</div>
+                        <div class="testimonial-author">Boutique Hotel Cartagena · CEO</div>
+                    </div>
                 </div>
             </div>
         </div>
         
         <div class="footer">
-            <h3 style="margin-bottom: 8px;"><i class="fas fa-shield-alt"></i> Secure & Private</h3>
-            <p style="max-width: 800px; margin: 0 auto 16px;">
-                Your data is encrypted and processed securely. We never store your personal information or share it with third parties.
+            <h3 style="margin-bottom: 8px;"><i class="fas fa-shield-alt"></i> Privacidad y seguridad</h3>
+            <p style="max-width: 800px; margin: 0 auto 16px; color:#6B5E51; opacity:0.85; font-size: 0.95rem;">
+                Tus datos están cifrados y procesados de forma segura. Caspar nunca los comparte con terceros.
             </p>
-            <p>&copy; 2026 Caspar Marketing Agent. All rights reserved. | <a href="mailto:support@marketingagent.com">Support</a></p>
+            <p style="opacity:0.8; font-size: 0.9rem;">&copy; 2026 Caspar Marketing Agent. All rights reserved. | <a href="mailto:support@marketingagent.com">Support</a></p>
         </div>
     </div>
     
+    <!-- Mobile sticky CTA for conversion -->
+    <div class="mobile-sticky-cta" style="position:fixed;left:0;right:0;bottom:0;background:rgba(249,246,242,0.94);border-top:1px solid rgba(0,0,0,0.06);padding:10px 16px;display:none;z-index:1000;">
+        <button id="mobileStartCTA" class="btn-primary" style="width:100%;" aria-label="Empieza gratis con IA (móvil)">🚀 Empieza gratis con IA</button>
+    </div>
+
+    <!-- JSON-LD Schema.org -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "Caspar Marketing Agent",
+      "serviceType": "Hotel Marketing Automation",
+      "provider": {
+        "@type": "Organization",
+        "name": "Caspar"
+      },
+      "areaServed": "Global",
+      "offers": {
+        "@type": "Offer",
+        "price": "720",
+        "priceCurrency": "USD",
+        "description": "Estrategias de marketing con IA y campañas en Google Ads"
+      }
+    }
+    </script>
+
     <script>
         const form = document.getElementById('analysisForm');
+        const ctaAnalyze = document.getElementById('ctaAnalyze');
+        const ctaExample = document.getElementById('ctaExample');
         const submitBtn = document.getElementById('submitBtn');
         const btnText = document.querySelector('.btn-text');
         const loading = document.getElementById('loading');
@@ -577,6 +821,44 @@
         
         let currentRequestId = null;
         let statusCheckInterval = null;
+
+        if (ctaAnalyze) {
+            ctaAnalyze.addEventListener('click', () => {
+                const el = document.getElementById('formSection');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+            });
+        }
+
+        if (ctaExample) {
+            ctaExample.addEventListener('click', () => {
+                const el = document.getElementById('resultsSection');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+            });
+        }
+
+        // Show mobile sticky CTA on small screens
+        const sticky = document.querySelector('.mobile-sticky-cta');
+        const isSmall = () => window.matchMedia('(max-width: 768px)').matches;
+        const updateSticky = () => { sticky.style.display = isSmall() ? 'block' : 'none'; };
+        updateSticky();
+        window.addEventListener('resize', updateSticky);
+        document.getElementById('mobileStartCTA')?.addEventListener('click', () => {
+            const el = document.getElementById('formSection');
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // Loop animation line in hero
+        const loopLine = document.getElementById('loopLine');
+        const steps = [
+            'Analiza → Genera → Lanza → Optimiza → Repite',
+            'Analiza con IA → Genera estrategias → Lanza campañas → Optimiza ROAS',
+            'Descubre → Crea → Activa → Mide → Escala'
+        ];
+        let idx = 0;
+        setInterval(() => {
+            idx = (idx + 1) % steps.length;
+            if (loopLine) loopLine.textContent = steps[idx];
+        }, 3500);
         
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -749,22 +1031,22 @@
                         <div class="kpi"><div class="label">Tier</div><div class="value">${(strategy.budget_tier || 'Standard')}</div></div>
                     </div>
                     <div class="two-col">
-                        <div class="result-card">
-                            <h3><i class="fas fa-chart-bar"></i> Market Analysis</h3>
+                <div class="result-card">
+                    <h3><i class="fas fa-chart-bar"></i> Market Analysis</h3>
                             <p><strong>Hotel:</strong> ${results.hotel_name}</p>
                             <p><strong>Target Audience:</strong> ${results.market_analysis.target_audience}</p>
                             <p><strong>Opportunities:</strong> ${results.market_analysis.market_opportunities.join(', ')}</p>
-                        </div>
-                        <div class="result-card">
-                            <h3><i class="fas fa-bullhorn"></i> Marketing Strategy</h3>
+                </div>
+                <div class="result-card">
+                    <h3><i class="fas fa-bullhorn"></i> Marketing Strategy</h3>
                             <p><strong>Recommended Channels:</strong> ${results.marketing_strategy.recommended_channels.join(', ')}</p>
                             <p><strong>Budget Allocation:</strong> Google Ads (${results.marketing_strategy.budget_allocation.google_ads}%), Social Media (${results.marketing_strategy.budget_allocation.social_media}%), Content (${results.marketing_strategy.budget_allocation.content_creation}%)</p>
                         </div>
                     </div>
                 </div>
-
+                
                 <div class="panel" id="panel-agents">
-                    <div class="result-card">
+                <div class="result-card">
                         <h3><i class="fas fa-search"></i> Market Research Agent - COMPLETED</h3>
                         <p><strong>Key Findings:</strong></p>
                         <ul style="margin-left: 20px;">
@@ -775,7 +1057,7 @@
                             <li>2.5M potential customers in target area</li>
                             <li><strong>Market Opportunities:</strong> ${results.market_analysis.market_opportunities.join(', ')}</li>
                         </ul>
-                    </div>
+                </div>
                     <div class="result-card">
                         <h3><i class="fas fa-bullhorn"></i> Ad Generator Agent - COMPLETED</h3>
                         <p><strong>Campaigns Created:</strong></p>
@@ -807,11 +1089,11 @@
                             <li><strong>Quality Check:</strong> All campaigns meet brand safety and performance standards</li>
                         </ul>
                     </div>
-                    <div class="result-card">
-                        <h3><i class="fas fa-lightbulb"></i> Optimization Recommendations</h3>
-                        <ul style="margin-left: 20px; color: #4a5568;">
+                <div class="result-card">
+                    <h3><i class="fas fa-lightbulb"></i> Optimization Recommendations</h3>
+                    <ul style="margin-left: 20px; color: #4a5568;">
                             ${results.optimization_recommendations.map(rec => `<li>${rec}</li>`).join('')}
-                        </ul>
+                    </ul>
                     </div>
                 </div>
 

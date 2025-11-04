@@ -51,7 +51,15 @@ class GoogleAdsAPI:
             # Try to load from google-ads.yaml first
             try:
                 self.client = GoogleAdsClient.load_from_storage()
-                self.customer_id = os.getenv('GOOGLE_ADS_LOGIN_CUSTOMER_ID')
+                # Force the runtime login_customer_id to the env value to avoid YAML placeholders
+                env_login_id = os.getenv('GOOGLE_ADS_LOGIN_CUSTOMER_ID')
+                if env_login_id:
+                    try:
+                        # google-ads client supports setting this attribute
+                        self.client.login_customer_id = env_login_id
+                    except Exception:
+                        pass
+                self.customer_id = env_login_id
                 print("✅ Google Ads API client initialized from google-ads.yaml")
                 return True
             except Exception as yaml_error:
