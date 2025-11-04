@@ -11,6 +11,11 @@ import threading
 import time
 import concurrent.futures
 from functools import wraps
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
+
 # Add parent directory to path to import our modules
 sys.path.append('..')
 
@@ -660,7 +665,16 @@ def send_report():
             })
             return jsonify({'success': True, 'message': 'Report sent successfully'})
         else:
-            return jsonify({'success': False, 'message': 'Failed to send email'}), 500
+            # Check if it's a credentials issue
+            sender_email = os.getenv('EMAIL_USER')
+            sender_password = os.getenv('EMAIL_PASSWORD')
+            if not sender_email or not sender_password:
+                return jsonify({
+                    'success': False, 
+                    'message': 'Email configuration missing. Please set EMAIL_USER and EMAIL_PASSWORD environment variables.'
+                }), 400
+            else:
+                return jsonify({'success': False, 'message': 'Failed to send email. Please check email configuration.'}), 500
             
     except Exception as e:
         logger.error(f"Error sending report: {str(e)}", extra={
@@ -876,12 +890,37 @@ Generated on {datetime.now().strftime('%B %d, %Y at %I:%M %p')} for {hotel_name}
 def send_email_notification(email, content, results):
     """Send email notification (simplified version)"""
     try:
-        # In production, use proper email service like SendGrid, AWS SES, etc.
-        # For now, we'll simulate email sending
-        logger.info(f"Email would be sent to {email} with marketing report")
-        
-        # Simulate email sending success
-        return True
+        # Try real SMTP sending if credentials are configured
+        smtp_server = os.getenv('SMTP_SERVER', 'smtp.gmail.com')
+        smtp_port = int(os.getenv('SMTP_PORT', '587'))
+        sender_email = os.getenv('EMAIL_USER')
+        sender_password = os.getenv('EMAIL_PASSWORD')
+
+        if sender_email and sender_password:
+            try:
+                msg = MIMEMultipart('alternative')
+                msg['Subject'] = f"🏨 tphagent Marketing Strategy Results - {results.get('hotel_name', 'Hotel')}"
+                msg['From'] = sender_email
+                msg['To'] = email
+
+                # Plain text body
+                msg.attach(MIMEText(content, 'plain', 'utf-8'))
+
+                server = smtplib.SMTP(smtp_server, smtp_port)
+                server.starttls()
+                server.login(sender_email, sender_password)
+                server.sendmail(sender_email, [email], msg.as_string())
+                server.quit()
+
+                logger.info(f"Email sent to {email}", extra={'category': 'business', 'event_type': 'email_sent'})
+                return True
+            except Exception as send_err:
+                logger.error(f"SMTP send failed: {send_err}", extra={'category': 'system', 'event_type': 'email_error'})
+                return False
+        else:
+            # Credentials not set; cannot send for real
+            logger.warning("EMAIL_USER/EMAIL_PASSWORD not set; email not sent", extra={'category': 'system', 'event_type': 'email_skipped'})
+            return False
         
     except Exception as e:
         logger.error(f"Error sending email: {str(e)}")
@@ -943,8 +982,8 @@ if __name__ == '__main__':
     # Optimized Flask configuration for better performance
     app.config.update(
         DEBUG=False,  # Disable debug mode for better performance
-        TEMPLATES_AUTO_RELOAD=False,  # Disable auto-reload for production
-        SEND_FILE_MAX_AGE_DEFAULT=300,  # Cache static files for 5 minutes
+        TEMPLATES_AUTO_RELOAD=True,  # Enable template auto-reload for local development
+        SEND_FILE_MAX_AGE_DEFAULT=0,  # Disable static file caching for local development
         MAX_CONTENT_LENGTH=16 * 1024 * 1024,  # 16MB max file size
     )
     

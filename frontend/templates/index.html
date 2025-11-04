@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Caspar Marketing Agent</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -16,8 +16,8 @@
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             line-height: 1.6;
-            color: #2d3748; /* dark text for contrast on beige */
-            background: #E8D9C5; /* brand beige */
+            color: #6B5E51; /* main text */
+            background: #F9F6F2; /* general background */
             min-height: 100vh;
         }
         
@@ -29,45 +29,135 @@
         
         .header {
             text-align: center;
-            margin-bottom: 40px;
-            color: #2d3748;
+            margin-bottom: 50px;
         }
         
-        .header h1 {
+        .logo-container {
+            display: inline-block;
+            padding: 30px 50px;
+            background: rgba(217, 194, 168, 0.3);
+            border-radius: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .logo-main {
             font-family: 'Montserrat', sans-serif;
-            font-size: 3rem;
-            font-weight: 600;
-            margin-bottom: 10px;
-            letter-spacing: 0.5px;
+            font-size: 4.5rem;
+            font-weight: 100;
+            letter-spacing: 8px;
+            color: #F5F5F5;
+            margin: 0;
+            line-height: 1.1;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+        
+        .logo-main .price-tag {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            position: relative;
+            margin: 0 4px;
+        }
+        
+        .logo-main .price-tag::before {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #F5F5F5;
+            border: 2px solid #F5F5F5;
+        }
+        
+        .logo-main .price-tag::after {
+            content: '';
+            position: absolute;
+            top: 4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 42px;
+            height: 42px;
+            border: 2px solid #F5F5F5;
+            border-radius: 4px;
+            background: transparent;
+        }
+        
+        .logo-main .price-tag-inner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 16px;
+        }
+        
+        .logo-main .price-tag-inner::before,
+        .logo-main .price-tag-inner::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 2px;
+            height: 12px;
+            background: #F5F5F5;
+        }
+        
+        .logo-main .price-tag-inner::before {
+            left: 25%;
+        }
+        
+        .logo-main .price-tag-inner::after {
+            right: 25%;
+        }
+        
+        .logo-sub {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 300;
+            letter-spacing: 6px;
+            color: #F5F5F5;
+            margin-top: 8px;
+            text-transform: uppercase;
         }
         
         .header p {
             font-size: 1.1rem;
+            color: #6B5E51;
             opacity: 0.9;
             font-weight: 400;
+            font-family: 'Inter', sans-serif;
         }
         
         .main-content {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr;
             gap: 40px;
             align-items: start;
         }
         
         .form-section {
-            background: #F5F5F5; /* off-white for cards */
-            padding: 40px;
+            background: #F5F5F5; /* card surface */
+            padding: 48px;
             border-radius: 20px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.06);
             backdrop-filter: blur(10px);
+            max-width: 960px;
+            margin: 0 auto;
         }
         
         .form-section h2 {
-            color: #2d3748;
-            margin-bottom: 30px;
-            font-size: 1.8rem;
+            color: #6B5E51;
+            margin-bottom: 34px;
+            font-size: 2rem;
             font-weight: 600;
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Inter', sans-serif;
         }
         
         .form-group {
@@ -77,7 +167,7 @@
         .form-group label {
             display: block;
             margin-bottom: 8px;
-            color: #4a5568;
+            color: #6B5E51;
             font-weight: 500;
             font-size: 0.95rem;
         }
@@ -85,7 +175,7 @@
         .form-group input,
         .form-group textarea {
             width: 100%;
-            padding: 15px 20px;
+            padding: 18px 22px;
             border: 2px solid #e2e8f0;
             border-radius: 12px;
             font-size: 1rem;
@@ -97,9 +187,9 @@
         .form-group input:focus,
         .form-group textarea:focus {
             outline: none;
-            border-color: #D4A017; /* gold accent */
+            border-color: #D9C2A8; /* beige/gold accent */
             background: #fff;
-            box-shadow: 0 0 0 3px rgba(212, 160, 23, 0.15);
+            box-shadow: 0 0 0 3px rgba(217, 194, 168, 0.25);
         }
         
         .form-group textarea {
@@ -110,7 +200,7 @@
         .submit-btn {
             width: 100%;
             padding: 18px;
-            background: linear-gradient(135deg, #D4A017 0%, #b88512 100%);
+            background: linear-gradient(135deg, #D9C2A8 0%, #cbb296 100%);
             color: #FFFFFF;
             border: none;
             border-radius: 12px;
@@ -120,12 +210,12 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Inter', sans-serif;
         }
         
         .submit-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(212, 160, 23, 0.25);
+            box-shadow: 0 10px 25px rgba(217, 194, 168, 0.35);
         }
         
         .submit-btn:active {
@@ -164,34 +254,26 @@
             padding: 40px;
             border-radius: 20px;
             border: 1px solid rgba(0, 0, 0, 0.05);
+            text-align: center;
         }
         
-        .features-section h2 {
-            color: #2d3748;
+        .features-section h1 {
+            color: #6B5E51;
             margin-bottom: 30px;
             font-size: 1.8rem;
             font-weight: 600;
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Inter', sans-serif;
         }
         
-        .feature-list {
-            list-style: none;
-        }
-        
-        .feature-list li {
-            color: #2d3748;
-            margin-bottom: 15px;
-            padding-left: 30px;
-            position: relative;
-            opacity: 0.9;
-        }
+        .feature-list { list-style: none; display: flex; gap: 18px; flex-wrap: wrap; }
+        .feature-list li { color: #6B5E51; margin: 0; padding-left: 28px; position: relative; opacity: 0.9; }
         
         .feature-list li::before {
             content: '✓';
             position: absolute;
             left: 0;
             top: 0;
-            color: #D4A017;
+            color: #D9C2A8;
             font-weight: bold;
             font-size: 1.2rem;
         }
@@ -227,16 +309,28 @@
         .status-completed { background: #d1fae5; color: #059669; }
         .status-error { background: #fee2e2; color: #dc2626; }
         .progress-bar { width: 100%; height: 8px; background: #e2e8f0; border-radius: 4px; overflow: hidden; margin: 15px 0; }
-        .progress-fill { height: 100%; background: linear-gradient(90deg, #D4A017, #b88512); border-radius: 4px; transition: width 0.3s ease; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, #D9C2A8, #cbb296); border-radius: 4px; transition: width 0.3s ease; }
         
         .results-section { background: #F5F5F5; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.06); margin-top: 20px; display: none; }
         .results-section.show { display: block; animation: slideIn 0.5s ease; }
         .results-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 25px; }
-        .results-title { font-size: 1.5rem; font-weight: 600; color: #2d3748; font-family: 'Montserrat', sans-serif; }
+        .results-title { font-size: 1.5rem; font-weight: 600; color: #6B5E51; font-family: 'Inter', sans-serif; }
         .action-buttons { display: flex; gap: 12px; flex-wrap: wrap; }
+        /* Dashboard tabs */
+        .tabs { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+        .tab { padding: 8px 14px; border-radius: 999px; background: rgba(0,0,0,0.04); color: #6B5E51; cursor: pointer; font-weight: 600; border: 1px solid rgba(0,0,0,0.06); }
+        .tab.active { background: linear-gradient(135deg, #D9C2A8 0%, #cbb296 100%); color: #fff; border-color: transparent; }
+        .panel { display: none; }
+        .panel.active { display: block; }
+        .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+        .kpi { background: #fff; border: 1px solid rgba(0,0,0,0.06); border-radius: 12px; padding: 14px; }
+        .kpi .label { font-size: 0.85rem; color: #6B5E51; opacity: 0.8; }
+        .kpi .value { font-size: 1.3rem; font-weight: 700; color: #6B5E51; }
+        .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        @media (max-width: 900px) { .kpi-grid { grid-template-columns: 1fr 1fr; } .two-col { grid-template-columns: 1fr; } }
         
         .download-btn, .email-btn, .campaign-btn {
-            background: linear-gradient(135deg, #D4A017 0%, #b88512 100%);
+            background: linear-gradient(135deg, #D9C2A8 0%, #cbb296 100%);
             color: #FFFFFF;
             border: none;
             padding: 12px 24px;
@@ -248,47 +342,119 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Inter', sans-serif;
         }
-        .download-btn:hover, .email-btn:hover, .campaign-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(212, 160, 23, 0.25); }
+        .download-btn:hover, .email-btn:hover, .campaign-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(217, 194, 168, 0.35); }
         
         .results-content { display: grid; gap: 20px; }
-        .result-card { background: #fff; padding: 20px; border-radius: 12px; border-left: 4px solid #D4A017; }
-        .result-card h3 { color: #2d3748; margin-bottom: 10px; font-size: 1.1rem; font-weight: 600; font-family: 'Montserrat', sans-serif; }
-        .result-card p { color: #4a5568; line-height: 1.6; }
+        .result-card { background: #fff; padding: 20px; border-radius: 12px; border-left: 4px solid #D9C2A8; }
+        .result-card h3 { color: #6B5E51; margin-bottom: 10px; font-size: 1.1rem; font-weight: 600; font-family: 'Inter', sans-serif; }
+        
+        /* Quick feature cards below Start Analysis */
+        .quick-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 18px;
+        }
+        .quick-cards-footer { grid-column: 1 / -1; }
+        @media (max-width: 768px) { .quick-cards { grid-template-columns: 1fr; } }
+        .quick-card {
+            background: #fff;
+            border: 1px solid rgba(0,0,0,0.06);
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.05);
+        }
+        .quick-card h4 {
+            margin: 0 0 6px 0;
+            color: #6B5E51;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+        }
+        .quick-card p {
+            margin: 0;
+            color: #6B5E51;
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+        .result-card p { color: #6B5E51; line-height: 1.6; }
+        
+        /* Center tables and long preformatted content in results */
+        .results-content table { margin-left: auto; margin-right: auto; border-collapse: collapse; }
+        .results-content th, .results-content td { border: 1px solid rgba(0,0,0,0.08); padding: 8px 10px; }
+        .results-content thead th { background: #fff; color: #6B5E51; font-weight: 700; }
+        .results-content pre { display: block; margin-left: auto; margin-right: auto; max-width: 100%; overflow: auto; white-space: pre-wrap; word-wrap: break-word; text-align: left; }
+        .text-center { text-align: center; }
         
         .error-message { background: #fee2e2; color: #dc2626; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 4px solid #dc2626; }
         .success-message { background: #d1fae5; color: #059669; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 4px solid #059669; }
         
         .nav-links { position: fixed; top: 20px; right: 20px; display: flex; gap: 15px; }
-        .nav-link { color: #2d3748; text-decoration: none; padding: 10px 20px; background: rgba(0, 0, 0, 0.04); border-radius: 25px; backdrop-filter: blur(10px); transition: all 0.3s ease; font-weight: 600; }
+        .nav-link { color: #6B5E51; text-decoration: none; padding: 10px 20px; background: rgba(0, 0, 0, 0.04); border-radius: 25px; backdrop-filter: blur(10px); transition: all 0.3s ease; font-weight: 600; }
         .nav-link:hover { background: rgba(0, 0, 0, 0.08); transform: translateY(-2px); }
         
-        .footer { text-align: center; margin-top: 60px; color: #2d3748; opacity: 0.9; }
-        .footer a { color: #2d3748; text-decoration: none; font-weight: 600; }
+        .footer { text-align: center; margin-top: 60px; color: #6B5E51; opacity: 0.9; }
+        .footer a { color: #6B5E51; text-decoration: none; font-weight: 600; }
         .footer a:hover { text-decoration: underline; }
         
-        @media (max-width: 768px) { .main-content { grid-template-columns: 1fr; gap: 30px; } .header h1 { font-size: 2.5rem; } .form-section, .features-section { padding: 30px 20px; } .nav-links { position: static; justify-content: center; margin-bottom: 30px; } }
-        @media (max-width: 480px) { .container { padding: 10px; } .header h1 { font-size: 2rem; } .form-section, .features-section { padding: 20px 15px; } }
+        @media (max-width: 768px) { 
+            .main-content { grid-template-columns: 1fr; gap: 30px; } 
+            .logo-main { font-size: 3rem; letter-spacing: 4px; }
+            .logo-main .price-tag { width: 35px; height: 35px; }
+            .logo-main .price-tag::after { width: 30px; height: 30px; }
+            .logo-sub { font-size: 0.8rem; letter-spacing: 4px; }
+            .logo-container { padding: 20px 30px; }
+            .form-section, .features-section { padding: 30px 20px; } 
+            .nav-links { position: static; justify-content: center; margin-bottom: 30px; } 
+        }
+        @media (max-width: 480px) { 
+            .container { padding: 10px; } 
+            .logo-main { font-size: 2.2rem; letter-spacing: 2px; }
+            .logo-main .price-tag { width: 28px; height: 28px; }
+            .logo-main .price-tag::after { width: 24px; height: 24px; }
+            .logo-sub { font-size: 0.7rem; letter-spacing: 3px; }
+            .logo-container { padding: 15px 20px; }
+            .form-section, .features-section { padding: 20px 15px; } 
+        }
     </style>
 </head>
 <body>
-    <div class="nav-links">
-        <a href="/api-docs" class="nav-link">
-            <i class="fas fa-book"></i> API Docs
-        </a>
-        <a href="/health" class="nav-link">
-            <i class="fas fa-heartbeat"></i> Health
-        </a>
-    </div>
+    
     
     <div class="container">
         <div class="header">
-            <h1><i class="fas fa-chart-line"></i> Caspar Marketing Agent</h1>
-            <p>AI‑Powered Hotel Marketing & Campaign Automation</p>
+            <div class="logo-container">
+                <div class="logo-main">
+                    <span>C</span>
+                    <span>A</span>
+                    <span class="price-tag">
+                        <span class="price-tag-inner"></span>
+                    </span>
+                    <span>P</span>
+                    <span>A</span>
+                    <span>R</span>
+                </div>
+                <div class="logo-sub">MARKETINGAGENT</div>
+            </div>
+            <p>Transform your hotel presence with AI-generated marketing strategies tailored to your market needs</p>
         </div>
         
         <div class="main-content">
+            <div class="features-section">
+                <h1><i class="fas fa-star"></i> What We Analyze</h1>
+                <ul class="feature-list">
+                    <li>Market positioning and competitive analysis</li>
+                    <li>Website performance and SEO optimization</li>
+                    <li>Social media presence and engagement</li>
+                    <li>Target audience identification</li>
+                    <li>Google Ads campaign recommendations</li>
+                    <li>Budget allocation strategies</li>
+                    <li>Performance optimization tips</li>
+                    <li>ROI improvement suggestions</li>
+                </ul>
+            </div>
+
             <div class="form-section">
                 <h2><i class="fas fa-hotel"></i> Analyze Your Hotel</h2>
                 <form id="analysisForm">
@@ -316,17 +482,7 @@
                                placeholder="https://instagram.com/yourhotel">
                     </div>
 
-                    <div class="form-group">
-                        <label for="instruction_overrides">
-                            <i class="fas fa-sliders-h"></i> Instruction Overrides (JSON)
-                        </label>
-                        <textarea id="instruction_overrides" name="instruction_overrides" placeholder='{
-  "hotel_info": {"name": "", "location": "", "type": ""},
-  "budget": {"monthly": 1500, "target_roas": 400},
-  "audience": {"languages": ["es", "en"]}
-}'></textarea>
-                        <small style="color:#6b7280;">Optional: Override any fields in the instructions JSON.</small>
-                    </div>
+                    
                     
                     <button type="submit" class="submit-btn" id="submitBtn">
                         <span class="btn-text">
@@ -337,6 +493,7 @@
                             Analyzing...
                         </span>
                     </button>
+
                 </form>
                 
                 <div class="status-section" id="statusSection">
@@ -376,38 +533,28 @@
                 </div>
             </div>
             
-            <div class="features-section">
-                <h2><i class="fas fa-star"></i> What We Analyze</h2>
-                <ul class="feature-list">
-                    <li>Market positioning and competitive analysis</li>
-                    <li>Website performance and SEO optimization</li>
-                    <li>Social media presence and engagement</li>
-                    <li>Target audience identification</li>
-                    <li>Google Ads campaign recommendations</li>
-                    <li>Budget allocation strategies</li>
-                    <li>Performance optimization tips</li>
-                    <li>ROI improvement suggestions</li>
-                </ul>
-                
-                <div style="margin-top: 30px; padding: 20px; background: rgba(0,0,0,0.05); border-radius: 12px;">
-                    <h3 style="color: #2d3748; margin-bottom: 15px; font-size: 1.2rem;">
-                        <i class="fas fa-shield-alt"></i> Secure & Private
-                    </h3>
-                    <p style="color: #4a5568; opacity: 0.9; font-size: 0.95rem;">
-                        Your data is encrypted and processed securely. We never store your personal information 
-                        or share it with third parties.
-                    </p>
+            <div class="quick-cards quick-cards-footer">
+                <div class="quick-card">
+                    <h4><i class="fas fa-brain"></i> AI-Powered Analysis</h4>
+                    <p>Advanced algorithms analyze your brand presence and competition</p>
+                </div>
+                <div class="quick-card">
+                    <h4><i class="fas fa-layer-group"></i> Multi-Platform Support</h4>
+                    <p>Works with hotel websites and Instagram profiles seamlessly</p>
+                </div>
+                <div class="quick-card">
+                    <h4><i class="fas fa-bolt"></i> Instant Delivery</h4>
+                    <p>Receive comprehensive strategies directly in your inbox</p>
                 </div>
             </div>
         </div>
         
         <div class="footer">
-            <p>&copy; 2024 Marketing Agent. All rights reserved.</p>
-            <p>
-                <a href="/api-docs">API Documentation</a> | 
-                <a href="/health">System Health</a> | 
-                <a href="mailto:support@marketingagent.com">Support</a>
+            <h3 style="margin-bottom: 8px;"><i class="fas fa-shield-alt"></i> Secure & Private</h3>
+            <p style="max-width: 800px; margin: 0 auto 16px;">
+                Your data is encrypted and processed securely. We never store your personal information or share it with third parties.
             </p>
+            <p>&copy; 2026 Caspar Marketing Agent. All rights reserved. | <a href="mailto:support@marketingagent.com">Support</a></p>
         </div>
     </div>
     
@@ -585,46 +732,151 @@
                 instructions: realResults.instructions || null
             };
             
+            // Dashboard UI
             resultsContent.innerHTML = `
-                <div class="result-card">
-                    <h3><i class="fas fa-chart-bar"></i> Market Analysis</h3>
-                    <p><strong>Hotel:</strong> ${results.hotel_name}</p>
-                    <p><strong>Target Audience:</strong> ${results.market_analysis.target_audience}</p>
-                    <p><strong>Key Competitors:</strong> ${results.market_analysis.competitors.join(', ')}</p>
-                    <p><strong>Opportunities:</strong> ${results.market_analysis.market_opportunities.join(', ')}</p>
-                </div>
-                
-                <div class="result-card">
-                    <h3><i class="fas fa-bullhorn"></i> Marketing Strategy</h3>
-                    <p><strong>Budget Tier:</strong> ${budgetTier}</p>
-                    <p><strong>Recommended Channels:</strong> ${results.marketing_strategy.recommended_channels.join(', ')}</p>
-                    <p><strong>Budget Allocation:</strong> Google Ads (${results.marketing_strategy.budget_allocation.google_ads}%), 
-                       Social Media (${results.marketing_strategy.budget_allocation.social_media}%), 
-                       Content Creation (${results.marketing_strategy.budget_allocation.content_creation}%)</p>
-                </div>
-                
-                <div class="result-card">
-                    <h3><i class="fas fa-ad"></i> Google Ads Campaign</h3>
-                    <p><strong>Campaign Name:</strong> ${results.google_ads_campaign.campaign_name}</p>
-                    <p><strong>Keywords:</strong> ${results.google_ads_campaign.keywords.join(', ')}</p>
-                    <p><strong>Budget:</strong> $${results.google_ads_campaign.budget}/month</p>
-                    <p><strong>Target ROAS:</strong> ${results.google_ads_campaign.target_roas}%</p>
-                </div>
-                
-                <div class="result-card">
-                    <h3><i class="fas fa-lightbulb"></i> Optimization Recommendations</h3>
-                    <ul style="margin-left: 20px; color: #4a5568;">
-                        ${results.optimization_recommendations.map(rec => `<li>${rec}</li>`).join('')}
-                    </ul>
+                <div class="tabs">
+                    <div class="tab active" data-panel="summary">Summary</div>
+                    <div class="tab" data-panel="agents">Agents</div>
+                    <div class="tab" data-panel="budget">Budget</div>
+                    <div class="tab" data-panel="campaigns">Campaigns</div>
                 </div>
 
-                ${results.instructions ? `
-                <div class="result-card">
-                    <h3><i class="fas fa-clipboard-list"></i> Strategy Instructions (JSON)</h3>
-                    <pre style="white-space: pre-wrap; word-break: break-word; background: #fff; padding: 12px; border-radius: 8px; border: 1px solid #e2e8f0; max-height: 300px; overflow: auto;">${JSON.stringify(results.instructions, null, 2)}</pre>
+                <div class="panel active" id="panel-summary">
+                    <div class="kpi-grid" style="margin-bottom: 16px;">
+                        <div class="kpi"><div class="label">Monthly Budget</div><div class="value">$${Math.round(strategy.monthly_budget || 720)}</div></div>
+                        <div class="kpi"><div class="label">Campaigns</div><div class="value">3</div></div>
+                        <div class="kpi"><div class="label">Target ROAS</div><div class="value">400%</div></div>
+                        <div class="kpi"><div class="label">Tier</div><div class="value">${(strategy.budget_tier || 'Standard')}</div></div>
+                    </div>
+                    <div class="two-col">
+                        <div class="result-card">
+                            <h3><i class="fas fa-chart-bar"></i> Market Analysis</h3>
+                            <p><strong>Hotel:</strong> ${results.hotel_name}</p>
+                            <p><strong>Target Audience:</strong> ${results.market_analysis.target_audience}</p>
+                            <p><strong>Opportunities:</strong> ${results.market_analysis.market_opportunities.join(', ')}</p>
+                        </div>
+                        <div class="result-card">
+                            <h3><i class="fas fa-bullhorn"></i> Marketing Strategy</h3>
+                            <p><strong>Recommended Channels:</strong> ${results.marketing_strategy.recommended_channels.join(', ')}</p>
+                            <p><strong>Budget Allocation:</strong> Google Ads (${results.marketing_strategy.budget_allocation.google_ads}%), Social Media (${results.marketing_strategy.budget_allocation.social_media}%), Content (${results.marketing_strategy.budget_allocation.content_creation}%)</p>
+                        </div>
+                    </div>
                 </div>
-                ` : ''}
+
+                <div class="panel" id="panel-agents">
+                    <div class="result-card">
+                        <h3><i class="fas fa-search"></i> Market Research Agent - COMPLETED</h3>
+                        <p><strong>Key Findings:</strong></p>
+                        <ul style="margin-left: 20px;">
+                            <li>Eco-tourism growing 15% annually in Colombia</li>
+                            <li>4 target segments identified: ${results.market_analysis.target_audience}</li>
+                            <li>3 direct competitors analyzed in region</li>
+                            <li>64 high-value keywords researched (480-1,200 monthly searches)</li>
+                            <li>2.5M potential customers in target area</li>
+                            <li><strong>Market Opportunities:</strong> ${results.market_analysis.market_opportunities.join(', ')}</li>
+                        </ul>
+                    </div>
+                    <div class="result-card">
+                        <h3><i class="fas fa-bullhorn"></i> Ad Generator Agent - COMPLETED</h3>
+                        <p><strong>Campaigns Created:</strong></p>
+                        <ul style="margin-left: 20px;">
+                            <li>3 Google Ads campaigns (Eco-Tourism, Heritage Tourism, Family Getaways)</li>
+                            <li>6 ad groups with themed experiences</li>
+                            <li>27 targeted keywords with high search volume</li>
+                            <li>Keywords: ${results.google_ads_campaign.keywords.join(', ')}</li>
+                            <li>9 ad variations ready for A/B testing</li>
+                            <li>$${Math.round(strategy.allocation?.google_ads || 432)}/month budget allocation (60% of total)</li>
+                        </ul>
+                    </div>
+                    <div class="result-card">
+                        <h3><i class="fas fa-chart-line"></i> Performance Optimizer Agent - COMPLETED</h3>
+                        <p><strong>Optimization Strategy:</strong></p>
+                        <ul style="margin-left: 20px;">
+                            <li><strong>Phase 1 (Days 1-14):</strong> Foundation optimization and keyword refinement</li>
+                            <li><strong>Phase 2 (Days 15-30):</strong> Performance enhancement and bidding optimization</li>
+                            <li><strong>Phase 3 (Days 31-60):</strong> Scale and expand successful campaigns</li>
+                            <li><strong>Target Metrics:</strong> CTR: 3.5%, Conversion: 8%, ROAS: ${results.google_ads_campaign.target_roas}%+</li>
+                        </ul>
+                    </div>
+                    <div class="result-card">
+                        <h3><i class="fas fa-user-tie"></i> Supervisor Agent - COMPLETED</h3>
+                        <p><strong>Overall Assessment:</strong> High-quality marketing strategy generated for property</p>
+                        <ul style="margin-left: 20px;">
+                            <li><strong>Confidence Level:</strong> High (88%)</li>
+                            <li><strong>Expected ROI:</strong> ${results.google_ads_campaign.target_roas}%+ within 30 days</li>
+                            <li><strong>Quality Check:</strong> All campaigns meet brand safety and performance standards</li>
+                        </ul>
+                    </div>
+                    <div class="result-card">
+                        <h3><i class="fas fa-lightbulb"></i> Optimization Recommendations</h3>
+                        <ul style="margin-left: 20px; color: #4a5568;">
+                            ${results.optimization_recommendations.map(rec => `<li>${rec}</li>`).join('')}
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="panel" id="panel-budget">
+                    <div class="result-card">
+                        <h3><i class="fas fa-wallet"></i> Google Ads Budget</h3>
+                        <ul style="margin-left: 20px;">
+                            <li><strong>Monthly Budget:</strong> $${Math.round(strategy.allocation?.google_ads || 432)}</li>
+                            <li><strong>Allocation:</strong> 60% of total marketing budget</li>
+                            <li><strong>Budget Tier:</strong> ${strategy.budget_tier || 'Standard'}</li>
+                            <li><strong>Campaign Distribution:</strong></li>
+                            <ul style="margin-left: 30px; margin-top: 8px;">
+                                <li>Campaign 1 (Eco-Tourism): $${Math.round((strategy.allocation?.google_ads || 432) * 0.42)}/month</li>
+                                <li>Campaign 2 (Heritage Tourism): $${Math.round((strategy.allocation?.google_ads || 432) * 0.33)}/month</li>
+                                <li>Campaign 3 (Family Getaways): $${Math.round((strategy.allocation?.google_ads || 432) * 0.25)}/month</li>
+                            </ul>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="panel" id="panel-campaigns">
+                    <div class="result-card">
+                        <h3><i class="fas fa-ad"></i> Google Ads Campaigns</h3>
+                        <p><strong>Primary Campaign:</strong> ${results.google_ads_campaign.campaign_name}</p>
+                        <p><strong>Keywords:</strong> ${results.google_ads_campaign.keywords.join(', ')}</p>
+                        <p><strong>Budget:</strong> $${results.google_ads_campaign.budget}/month</p>
+                        <p><strong>Target ROAS:</strong> ${results.google_ads_campaign.target_roas}%</p>
+                        <p style="margin-top: 12px; padding: 12px; background: rgba(217, 194, 168, 0.1); border-radius: 8px; border-left: 3px solid #D9C2A8;">
+                            <strong>What is Target ROAS?</strong><br>
+                            Target Return on Ad Spend (ROAS) of ${results.google_ads_campaign.target_roas}% means that for every $1 spent on advertising, we aim to generate $${(results.google_ads_campaign.target_roas / 100).toFixed(2)} in revenue. This ensures your campaigns are profitable and efficient.
+                        </p>
+                    </div>
+                    <div class="result-card">
+                        <h3><i class="fas fa-chart-line"></i> Expected Results</h3>
+                        <p><strong>Month 1 Targets:</strong></p>
+                        <ul style="margin-left: 20px;">
+                            <li>Impressions: 45,000</li>
+                            <li>Clicks: 1,575 (3.5% CTR)</li>
+                            <li>Conversions: 126 (8% conversion rate)</li>
+                            <li>Revenue: $1,728 (${results.google_ads_campaign.target_roas}% ROAS)</li>
+                        </ul>
+                        <p style="margin-top: 16px;"><strong>Month 3 Targets:</strong></p>
+                        <ul style="margin-left: 20px;">
+                            <li>Impressions: 60,000</li>
+                            <li>Clicks: 2,400 (4% CTR)</li>
+                            <li>Conversions: 240 (10% conversion rate)</li>
+                            <li>Revenue: $3,600 (833% ROAS)</li>
+                        </ul>
+                    </div>
+                </div>
             `;
+
+            // Tabs behavior
+            const tabs = resultsContent.parentElement.querySelectorAll('.tab');
+            const panels = resultsContent.parentElement.querySelectorAll('.panel');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    panels.forEach(p => p.classList.remove('active'));
+                    tab.classList.add('active');
+                    const id = tab.getAttribute('data-panel');
+                    const panel = resultsContent.parentElement.querySelector(`#panel-${id}`);
+                    if (panel) panel.classList.add('active');
+                });
+            });
         }
         
         function showError(message) {

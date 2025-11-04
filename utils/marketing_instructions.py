@@ -60,12 +60,12 @@ INSTRUCTIONS_JSON = {
             "competitor_names": []
         },
         "pmax_travel": {
-            "enabled": true,
+    "enabled": True,
             "feed": "Hotel Center",
-            "seasonality_adjustments": true
+            "seasonality_adjustments": True
         },
         "hotel_ads": {
-            "enabled": true,
+            "enabled": True,
             "bid_by": ["lead_time", "stay_length", "device"]
         }
     },
@@ -141,6 +141,7 @@ INSTRUCTIONS_JSON = {
         "Trackable conversions"
     ]
 }
+
 
 
 
