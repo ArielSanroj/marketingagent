@@ -68,3 +68,7 @@ memory.pkl
 
 # Test outputs
 test_results/
+# Ignore any env backups
+.env.bak
+.env.backup
+.env.*.bak
