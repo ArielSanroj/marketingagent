@@ -18,6 +18,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="icon" href="/static/favicon.ico">
     <link rel="apple-touch-icon" href="/static/apple-touch-icon.png">
@@ -270,6 +271,7 @@
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
+        .spin { animation: spin 1s linear infinite; display: inline-block; }
         
         @keyframes spin {
             0% { transform: rotate(0deg); }
@@ -390,7 +392,7 @@
             background: #fff;
             border: 1px solid rgba(0,0,0,0.06);
             border-radius: 12px;
-            padding: 16px;
+            padding: 18px;
             box-shadow: 0 6px 14px rgba(0,0,0,0.05);
             transition: transform .15s ease, box-shadow .2s ease;
         }
@@ -407,6 +409,8 @@
             opacity: 0.9;
             font-size: 0.95rem;
         }
+        .icon-badge { width: 44px; height: 44px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #D9C2A8 0%, #cbb296 100%); color: #fff; margin-right: 10px; box-shadow: 0 6px 16px rgba(217,194,168,0.35); }
+        .quick-card .title-row { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
         .result-card p { color: #6B5E51; line-height: 1.6; }
         
         /* Center tables and long preformatted content in results */
@@ -556,7 +560,7 @@
                 <p class="support" id="loopLine" aria-live="polite" style="font-weight:600;">Analiza → Genera → Lanza → Optimiza → Repite</p>
                 <div class="hero-ctas">
                     <button class="btn-primary" id="ctaAnalyze">🚀 Analizar y lanzar mi campaña</button>
-                    <button class="btn-secondary" id="ctaExample">Ver informe de ejemplo</button>
+                    <button class="btn-secondary" id="ctaExample">Haz una prueba</button>
                 </div>
                 <div class="microcopy">Sin registros ni tarjetas. Solo resultados en minutos.</div>
             </div>
@@ -565,7 +569,7 @@
         <div class="main-content">
             
             <div class="features-section">
-                <h1><i class="fas fa-star"></i> What We Analyze</h1>
+                <h1><i data-lucide="sparkles"></i> What We Analyze</h1>
                 <ul class="feature-list">
                     <li>Benchmarking de competencia y posicionamiento de marca</li>
                     <li>Optimización SEO y velocidad de tu sitio web</li>
@@ -583,21 +587,21 @@
                 <p class="sub">Caspar Marketing Agent combina investigación, creatividad y ejecución. Analiza tu presencia online, detecta oportunidades y lanza campañas reales en Google Ads con segmentación, presupuesto y mensajes optimizados automáticamente.</p>
                 <div class="how-grid">
                     <div class="how-card">
-                        <div class="how-icon"><i class="fas fa-magnifying-glass-chart"></i></div>
+                        <div class="how-icon"><i data-lucide="line-chart"></i></div>
                         <div>
                             <h4>Analiza y aprende</h4>
                             <p>Evalúa tu web, redes, competencia y rendimiento actual para entender dónde estás perdiendo reservas.</p>
                         </div>
                     </div>
                     <div class="how-card">
-                        <div class="how-icon"><i class="fas fa-rocket"></i></div>
+                        <div class="how-icon"><i data-lucide="rocket"></i></div>
                         <div>
                             <h4>Crea y lanza campañas</h4>
                             <p>Genera anuncios en Google Ads con copies y segmentación adaptados a tu mercado. Sin experiencia técnica.</p>
                         </div>
                     </div>
                     <div class="how-card">
-                        <div class="how-icon"><i class="fas fa-gauge-high"></i></div>
+                        <div class="how-icon"><i data-lucide="gauge"></i></div>
                         <div>
                             <h4>Mide y optimiza</h4>
                             <p>Supervisa resultados y ajusta presupuesto y creatividad para maximizar el ROI.</p>
@@ -607,26 +611,14 @@
                 <p class="microcopy" style="text-align:center;">Caspar convierte datos en reservas — sin agencias, sin reuniones, sin complicaciones.</p>
             </div>
             
-            <div class="features-section">
-                <h1><i class="fas fa-star"></i> What We Analyze</h1>
-                <ul class="feature-list">
-                    <li>Market positioning and competitive analysis</li>
-                    <li>Website performance and SEO optimization</li>
-                    <li>Social media presence and engagement</li>
-                    <li>Target audience identification</li>
-                    <li>Google Ads campaign recommendations</li>
-                    <li>Budget allocation strategies</li>
-                    <li>Performance optimization tips</li>
-                    <li>ROI improvement suggestions</li>
-                </ul>
-            </div>
+            
 
             <div class="form-section" id="formSection">
-                <h2><i class="fas fa-hotel"></i> Obtén tu análisis y lanza tu primera campaña con IA</h2>
+                <h2><i data-lucide="building-2"></i> Obtén tu análisis y lanza tu primera campaña con IA</h2>
                 <form id="analysisForm">
                     <div class="form-group">
                         <label for="email">
-                            <i class="fas fa-envelope"></i> Email Address *
+                            <i data-lucide="mail"></i> Email Address *
                         </label>
                         <input type="email" id="email" name="email" required 
                                placeholder="your@email.com">
@@ -634,7 +626,7 @@
                     
                     <div class="form-group">
                         <label for="hotel_url">
-                            <i class="fas fa-globe"></i> Hotel Website URL *
+                            <i data-lucide="globe"></i> Hotel Website URL *
                         </label>
                         <input type="url" id="hotel_url" name="hotel_url" required 
                                placeholder="https://yourhotel.com">
@@ -642,7 +634,7 @@
                     
                     <div class="form-group">
                         <label for="instagram_url">
-                            <i class="fab fa-instagram"></i> Instagram URL (Optional)
+                            <i data-lucide="instagram"></i> Instagram URL (Optional)
                         </label>
                         <input type="url" id="instagram_url" name="instagram_url" 
                                placeholder="https://instagram.com/yourhotel">
@@ -652,7 +644,7 @@
                     
                     <button type="submit" class="submit-btn" id="submitBtn">
                         <span class="btn-text">
-                            <i class="fas fa-rocket"></i> Obtener diagnóstico y lanzar campaña
+                            <i data-lucide="rocket"></i> Obtener diagnóstico y lanzar campaña
                         </span>
                         <span class="loading" id="loading">
                             <div class="spinner"></div>
@@ -685,13 +677,13 @@
                         <h3 class="results-title">Analysis Results</h3>
                         <div class="action-buttons">
                         <button class="download-btn" id="downloadBtn">
-                            <i class="fas fa-download"></i> Download Report
+                            <i data-lucide="download"></i> Download Report
                         </button>
                             <button class="email-btn" id="emailBtn">
-                                <i class="fas fa-envelope"></i> Email Report
+                                <i data-lucide="mail"></i> Email Report
                             </button>
                             <button class="campaign-btn" id="campaignBtn">
-                                <i class="fas fa-rocket"></i> Start Campaign
+                                <i data-lucide="rocket"></i> Start Campaign
                             </button>
                         </div>
                     </div>
@@ -703,15 +695,24 @@
             
             <div class="quick-cards quick-cards-footer">
                 <div class="quick-card">
-                    <h4><i class="fas fa-brain"></i> Análisis Inteligente</h4>
+                    <div class="title-row">
+                        <span class="icon-badge"><i data-lucide="brain-circuit"></i></span>
+                        <h4 style="margin:0;">Análisis Inteligente</h4>
+                    </div>
                     <p>Algoritmos avanzados detectan oportunidades y ventajas competitivas</p>
                 </div>
                 <div class="quick-card">
-                    <h4><i class="fas fa-layer-group"></i> Soporte Multiplataforma</h4>
+                    <div class="title-row">
+                        <span class="icon-badge"><i data-lucide="layers"></i></span>
+                        <h4 style="margin:0;">Soporte Multiplataforma</h4>
+                    </div>
                     <p>Funciona con tu web del hotel e Instagram de forma fluida</p>
                 </div>
                 <div class="quick-card">
-                    <h4><i class="fas fa-bolt"></i> Entrega Instantánea</h4>
+                    <div class="title-row">
+                        <span class="icon-badge"><i data-lucide="bolt"></i></span>
+                        <h4 style="margin:0;">Entrega Instantánea</h4>
+                    </div>
                     <p>Recibe estrategias e insumos listos para aprobar en minutos</p>
                 </div>
             </div>
@@ -720,28 +721,28 @@
                 <h1>¿Por qué Caspar funciona?</h1>
                 <div class="why-grid">
                     <div class="why-item">
-                        <div class="why-icon"><i class="fas fa-brain"></i></div>
+                        <div class="why-icon"><i data-lucide="brain-circuit"></i></div>
                         <div>
                             <h4>Análisis Inteligente</h4>
                             <span>Tu asistente de marketing analiza a tus competidores y encuentra las oportunidades más rentables.</span>
                         </div>
                     </div>
                     <div class="why-item">
-                        <div class="why-icon"><i class="fas fa-bullseye"></i></div>
+                        <div class="why-icon"><i data-lucide="target"></i></div>
                         <div>
                             <h4>Integración con Google Ads</h4>
                             <span>Lanza campañas reales, optimizadas automáticamente según tu mercado y presupuesto.</span>
                         </div>
                     </div>
                     <div class="why-item">
-                        <div class="why-icon"><i class="fas fa-bolt"></i></div>
+                        <div class="why-icon"><i data-lucide="bolt"></i></div>
                         <div>
                             <h4>Estrategia Instantánea</h4>
                             <span>Recibe un plan y anuncios listos para aprobar en minutos.</span>
                         </div>
                     </div>
                     <div class="why-item">
-                        <div class="why-icon"><i class="fas fa-shield-alt"></i></div>
+                        <div class="why-icon"><i data-lucide="shield-check"></i></div>
                         <div>
                             <h4>Privacidad Total</h4>
                             <span>Tus datos están cifrados y nunca se comparten.</span>
@@ -766,7 +767,7 @@
         </div>
         
         <div class="footer">
-            <h3 style="margin-bottom: 8px;"><i class="fas fa-shield-alt"></i> Privacidad y seguridad</h3>
+            <h3 style="margin-bottom: 8px;"><i data-lucide="shield-check"></i> Privacidad y seguridad</h3>
             <p style="max-width: 800px; margin: 0 auto 16px; color:#6B5E51; opacity:0.85; font-size: 0.95rem;">
                 Tus datos están cifrados y procesados de forma segura. Caspar nunca los comparte con terceros.
             </p>
@@ -777,6 +778,27 @@
     <!-- Mobile sticky CTA for conversion -->
     <div class="mobile-sticky-cta" style="position:fixed;left:0;right:0;bottom:0;background:rgba(249,246,242,0.94);border-top:1px solid rgba(0,0,0,0.06);padding:10px 16px;display:none;z-index:1000;">
         <button id="mobileStartCTA" class="btn-primary" style="width:100%;" aria-label="Empieza gratis con IA (móvil)">🚀 Empieza gratis con IA</button>
+    </div>
+
+    <!-- Google Ads Credentials Modal -->
+    <div id="gaModal" aria-hidden="true" role="dialog" aria-labelledby="gaModalTitle" style="position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.4);z-index:2000;">
+        <div style="background:#fff;border-radius:16px;max-width:640px;width:92%;padding:22px;border:1px solid rgba(0,0,0,0.08);box-shadow:0 20px 50px rgba(0,0,0,0.2);">
+            <h2 id="gaModalTitle" style="margin-bottom:8px;color:#6B5E51;">Conecta tus APIs de Google Ads</h2>
+            <p style="margin-bottom:14px;color:#6B5E51;opacity:0.9;">Ingresa tus credenciales para lanzar campañas reales. Puedes hacer una prueba sin Google Ads usando el simulador.</p>
+            <div class="form-group"><label>Developer Token</label><input type="text" id="ga_dev" placeholder="GOOGLE_ADS_DEVELOPER_TOKEN"></div>
+            <div class="form-group"><label>Client ID</label><input type="text" id="ga_cid" placeholder="GOOGLE_ADS_CLIENT_ID"></div>
+            <div class="form-group"><label>Client Secret</label><input type="text" id="ga_csecret" placeholder="GOOGLE_ADS_CLIENT_SECRET"></div>
+            <div class="form-group"><label>Refresh Token</label><input type="text" id="ga_refresh" placeholder="GOOGLE_ADS_REFRESH_TOKEN"></div>
+            <div class="form-group"><label>Login Customer ID</label><input type="text" id="ga_login" placeholder="GOOGLE_ADS_LOGIN_CUSTOMER_ID"></div>
+            <div class="form-group" style="display:flex;align-items:center;gap:8px;">
+                <input type="checkbox" id="ga_use_sim" checked>
+                <label for="ga_use_sim">Usar simulador si faltan APIs o hay error</label>
+            </div>
+            <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:8px;">
+                <button id="gaCancel" class="btn-secondary">Cancelar</button>
+                <button id="gaSave" class="btn-primary">Guardar y continuar</button>
+            </div>
+        </div>
     </div>
 
     <!-- JSON-LD Schema.org -->
@@ -798,6 +820,10 @@
         "description": "Estrategias de marketing con IA y campañas en Google Ads"
       }
     }
+        // Initialize Lucide icons
+        if (window.lucide && typeof window.lucide.createIcons === 'function') {
+            window.lucide.createIcons();
+        }
     </script>
 
     <script>
@@ -822,16 +848,20 @@
         let currentRequestId = null;
         let statusCheckInterval = null;
 
+        // Demo mode toggle
+        let demoMode = false;
+
         if (ctaAnalyze) {
             ctaAnalyze.addEventListener('click', () => {
-                const el = document.getElementById('formSection');
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
+                // Open Google Ads credentials modal instead of only scrolling
+                openGAModal();
             });
         }
 
         if (ctaExample) {
             ctaExample.addEventListener('click', () => {
-                const el = document.getElementById('resultsSection');
+                demoMode = true;
+                const el = document.getElementById('formSection');
                 if (el) el.scrollIntoView({ behavior: 'smooth' });
             });
         }
@@ -859,6 +889,50 @@
             idx = (idx + 1) % steps.length;
             if (loopLine) loopLine.textContent = steps[idx];
         }, 3500);
+
+        // Google Ads Modal logic
+        const gaModal = document.getElementById('gaModal');
+        const gaDev = document.getElementById('ga_dev');
+        const gaCid = document.getElementById('ga_cid');
+        const gaCsecret = document.getElementById('ga_csecret');
+        const gaRefresh = document.getElementById('ga_refresh');
+        const gaLogin = document.getElementById('ga_login');
+        const gaUseSim = document.getElementById('ga_use_sim');
+        const gaSave = document.getElementById('gaSave');
+        const gaCancel = document.getElementById('gaCancel');
+
+        function openGAModal() {
+            // Prefill from localStorage if available
+            const saved = JSON.parse(localStorage.getItem('google_ads_credentials') || '{}');
+            gaDev.value = saved.developer_token || '';
+            gaCid.value = saved.client_id || '';
+            gaCsecret.value = saved.client_secret || '';
+            gaRefresh.value = saved.refresh_token || '';
+            gaLogin.value = saved.login_customer_id || '';
+            gaUseSim.checked = saved.use_simulator !== false;
+            gaModal.style.display = 'flex';
+            gaModal.setAttribute('aria-hidden', 'false');
+        }
+        function closeGAModal() {
+            gaModal.style.display = 'none';
+            gaModal.setAttribute('aria-hidden', 'true');
+        }
+        gaCancel?.addEventListener('click', closeGAModal);
+        gaModal?.addEventListener('click', (e) => { if (e.target === gaModal) closeGAModal(); });
+        gaSave?.addEventListener('click', () => {
+            const creds = {
+                developer_token: gaDev.value.trim(),
+                client_id: gaCid.value.trim(),
+                client_secret: gaCsecret.value.trim(),
+                refresh_token: gaRefresh.value.trim(),
+                login_customer_id: gaLogin.value.trim(),
+                use_simulator: gaUseSim.checked
+            };
+            localStorage.setItem('google_ads_credentials', JSON.stringify(creds));
+            closeGAModal();
+            const el = document.getElementById('formSection');
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+        });
         
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -913,7 +987,7 @@
             resultsSection.classList.remove('show');
             
             statusIcon.className = 'status-icon status-processing';
-            statusIcon.innerHTML = '<i class="fas fa-cog fa-spin"></i>';
+            statusIcon.innerHTML = '<i data-lucide="loader-2" class="spin"></i>';
             statusTitle.textContent = 'Processing Analysis';
             statusMessage.textContent = 'Please wait while we analyze your hotel...';
             statusDetails.textContent = 'Initializing analysis...';
@@ -1426,6 +1500,18 @@ Generated on ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeStri
                 alert('Please complete an analysis first before starting the campaign.');
                 return;
             }
+            // Block Google Ads launch in demo mode or without credentials
+            const savedCreds = JSON.parse(localStorage.getItem('google_ads_credentials') || '{}');
+            const hasCreds = savedCreds.developer_token && savedCreds.client_id && savedCreds.client_secret && savedCreds.refresh_token && savedCreds.login_customer_id;
+            if (demoMode) {
+                alert('Modo prueba activo: puedes ver todo el análisis, pero para lanzar campañas conecta tus APIs de Google Ads.');
+                openGAModal();
+                return;
+            }
+            if (!hasCreds) {
+                openGAModal();
+                return;
+            }
             
             // Show confirmation dialog
             const confirmed = confirm(
@@ -1468,7 +1554,8 @@ Generated on ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeStri
                 },
                 body: JSON.stringify({
                     request_id: currentRequestId,
-                    results: results
+                    results: results,
+                    google_ads_credentials: JSON.parse(localStorage.getItem('google_ads_credentials') || '{}')
                 })
             })
             .then(response => response.json())
