@@ -1,3 +1,66 @@
+## Option A: Frontend on Vercel (static) + Backend on Render/Railway/Fly.io
+
+This approach keeps secrets off Vercel and runs the Python backend on a dedicated host.
+
+### 1) Prepare the backend (Flask) on Render/Railway/Fly.io
+
+- Repo: this repository (no `.env` committed; secrets set in the host dashboard).
+- Python version: 3.9+.
+- Start command:
+```
+PYTHONPATH=/app python3 frontend/app.py
+```
+- Env vars (set in the host):
+  - EMAIL_USER, EMAIL_PASSWORD, SMTP_SERVER, SMTP_PORT
+  - OLLAMA_BASE_URL, OLLAMA_MODEL (or your OPENAI_* if using OpenAI)
+  - PINECONE_API_KEY (optional)
+  - GOOGLE_ADS_* (only if launching real campaigns)
+  - Any other existing config you use in `.env`
+- Expose port: 15000 (or map to 80/443 via the platform).
+
+After deploy you will have a backend URL like `https://your-backend.onrender.com`.
+
+### 2) Prepare the frontend on Vercel (static)
+
+- Create a new Vercel project from this Git repo.
+- Framework preset: “Other”.
+- Public directory: `frontend/templates`.
+- Build command: none (static).
+- Output: leave empty.
+- Add a file `.vercelignore` (already included) so Vercel won’t upload `.env`, logs, tests, etc.
+
+### 3) Point the frontend to your backend
+
+The app reads `API_BASE` from `window.API_BASE` or `localStorage.API_BASE`.
+
+Options:
+- Quick (no rebuild): open your deployed site in the browser console and run:
+```
+localStorage.setItem('API_BASE','https://your-backend.onrender.com');
+location.reload();
+```
+- Permanent (recommended): add a small inline script in Vercel Settings → Analytics/Head (or via a wrapper index) that sets:
+```
+<script>window.API_BASE='https://your-backend.onrender.com';</script>
+```
+
+### 4) CORS (if required)
+
+If your host blocks cross-origin calls, enable CORS on the backend to allow your Vercel domain (e.g., `https://your-frontend.vercel.app`). You can add `flask-cors` and allow that origin.
+
+### 5) Secrets and safety checks
+
+- No secrets in git: `.env`, backups and `google-ads.yaml` are ignored.
+- Vercel only serves static frontend; secrets remain on backend host.
+
+### 6) Smoke test
+
+1. Load the frontend URL on Vercel.
+2. Set `API_BASE` (step 3) if not already injected.
+3. Ejecuta un análisis y verifica `/status/{request_id}`.
+4. “Haz una prueba” debe funcionar sin lanzar Google Ads reales.
+5. Para lanzar campañas reales, abre el modal, ingresa credenciales y verifica en tu cuenta.
+
 # Deployment Guide
 
 ## Overview

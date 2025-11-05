@@ -407,6 +407,8 @@ For production deployment:
 3. Set up Google Ads API integration
 4. Use Docker for containerization
 
+See `docs/DEPLOYMENT.md` for detailed guides, including Option A (Frontend on Vercel + Backend on Render/Railway).
+
 ## 🤝 Contributing
 
 1. Fork the repository

@@ -1,0 +1,34 @@
+# Do not upload local envs or secrets
+.env
+.env.*
+*.pem
+*.key
+google-ads.yaml
+
+# Python caches and build artifacts
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Logs and outputs
+logs/
+*.log
+outputs/
+*.pkl
+*.json
+memory_data.json
+memory.pkl
+
+# Tests and docs not needed for deploy
+tests/
+docs/
+htmlcov/
+
+# IDE/OS
+.vscode/
+.idea/
+.DS_Store
+
