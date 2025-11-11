@@ -827,6 +827,16 @@
     </script>
 
     <script>
+        // ============================================
+        // 🔗 CONFIGURACIÓN DEL BACKEND
+        // ============================================
+        // Reemplaza la URL de abajo con la URL de tu backend en Render
+        // Ejemplo: 'https://marketingagent-backend.onrender.com'
+        // Si dejas esto vacío, intentará usar localStorage o window.API_BASE
+        const BACKEND_URL = 'https://malaysia-organoleptic-nonhistrionically.ngrok-free.dev'; // 👈 URL del backend (ngrok)        
+        // Frontend → Backend base URL (for Vercel static + external backend)
+        const API_BASE = (BACKEND_URL || window.API_BASE || localStorage.getItem('API_BASE') || '').replace(/\/$/, '');
+        const apiUrl = (path) => `${API_BASE}${path}`;
         const form = document.getElementById('analysisForm');
         const ctaAnalyze = document.getElementById('ctaAnalyze');
         const ctaExample = document.getElementById('ctaExample');
@@ -955,7 +965,7 @@
             loading.style.display = 'flex';
             
             try {
-                const response = await fetch('/analyze', {
+                const response = await fetch(apiUrl('/analyze'), {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -1001,7 +1011,7 @@
             
             statusCheckInterval = setInterval(async () => {
                 try {
-                    const response = await fetch(`/status/${currentRequestId}`);
+                    const response = await fetch(apiUrl(`/status/${currentRequestId}`));
                     const status = await response.json();
                     
                     if (response.ok) {
@@ -1255,7 +1265,7 @@
             }
             
             // Get the current analysis results
-            fetch(`/status/${currentRequestId}`)
+            fetch(apiUrl(`/status/${currentRequestId}`))
                 .then(response => response.json())
                 .then(data => {
                     if (data.status === 'completed' && data.results) {
@@ -1464,7 +1474,7 @@ Generated on ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeStri
             emailBtn.disabled = true;
             
             // Send email request
-            fetch('/send-report', {
+            fetch(apiUrl('/send-report'), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -1526,7 +1536,7 @@ Generated on ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeStri
             if (!confirmed) return;
             
             // Get the current analysis results
-            fetch(`/status/${currentRequestId}`)
+            fetch(apiUrl(`/status/${currentRequestId}`))
                 .then(response => response.json())
                 .then(data => {
                     if (data.status === 'completed' && data.results) {
@@ -1547,7 +1557,7 @@ Generated on ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeStri
             campaignBtn.disabled = true;
             
             // Start campaign request
-            fetch('/start-campaign', {
+            fetch(apiUrl('/start-campaign'), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
