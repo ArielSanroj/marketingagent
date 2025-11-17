@@ -538,6 +538,10 @@
             .hero-metrics > div > div:first-child { font-size: 2rem !important; }
             .microcopy { display: flex; flex-direction: column; gap: 8px !important; }
             .microcopy > span { margin: 4px 0 !important; }
+            #chatWindow { width: calc(100vw - 40px) !important; right: 20px !important; }
+            .video-section iframe { border-radius: 12px !important; }
+            .pricing-section { padding: 40px 24px !important; }
+            .comparison-section table { font-size: 0.9rem; }
         }
         @media (max-width: 480px) {
             .container { padding: 10px; } 
@@ -654,6 +658,15 @@
                         <h3 style="font-size:1.2rem;font-weight:600;color:#6B5E51;margin-bottom:8px;">Optimización de presupuesto</h3>
                         <p style="color:#6B5E51;opacity:0.9;line-height:1.6;">Estrategias inteligentes de asignación para maximizar ROI</p>
                     </div>
+                </div>
+            </div>
+
+            <!-- Video Section -->
+            <div class="video-section" style="background:#F5F5F5;padding:48px;border-radius:20px;border:1px solid rgba(0,0,0,0.05);margin-top:40px;text-align:center;">
+                <h1 style="font-size:2.5rem;margin-bottom:12px;color:#6B5E51;">¿Cómo funciona?</h1>
+                <p class="sub" style="font-size:1.2rem;margin-bottom:32px;max-width:700px;margin-left:auto;margin-right:auto;">Mira cómo Caspar transforma datos en reservas en menos de 5 minutos</p>
+                <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;max-width:900px;margin:0 auto;border-radius:16px;box-shadow:0 20px 40px rgba(0,0,0,0.15);">
+                    <iframe style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" src="https://www.youtube.com/embed/kBkPXfTwbJc" title="Cómo funciona Caspar Marketing Agent" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
             </div>
 
@@ -861,6 +874,180 @@
                 </div>
             </div>
             
+            <!-- Pricing Section -->
+            <div class="pricing-section" style="background:linear-gradient(135deg, #D9C2A8 0%, #cbb296 100%);padding:64px 48px;border-radius:20px;margin-top:40px;text-align:center;color:#fff;">
+                <h1 style="font-size:2.5rem;margin-bottom:12px;color:#fff;">Precios transparentes, resultados garantizados</h1>
+                <p class="sub" style="font-size:1.2rem;margin-bottom:48px;color:rgba(255,255,255,0.95);max-width:700px;margin-left:auto;margin-right:auto;">Sin costos ocultos, sin comisiones, solo resultados</p>
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:32px;max-width:1000px;margin:0 auto;">
+                    <div style="background:#fff;padding:40px;border-radius:16px;box-shadow:0 20px 40px rgba(0,0,0,0.2);">
+                        <div style="font-size:0.9rem;font-weight:600;color:#D9C2A8;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Análisis Gratuito</div>
+                        <div style="font-size:3rem;font-weight:700;color:#6B5E51;margin-bottom:8px;">$0</div>
+                        <div style="color:#6B5E51;opacity:0.7;margin-bottom:24px;">Para siempre</div>
+                        <ul style="text-align:left;list-style:none;padding:0;margin:0 0 32px 0;">
+                            <li style="padding:12px 0;color:#6B5E51;border-bottom:1px solid rgba(0,0,0,0.05);">
+                                <span style="color:#D9C2A8;margin-right:8px;">✓</span> Análisis completo de tu hotel
+                            </li>
+                            <li style="padding:12px 0;color:#6B5E51;border-bottom:1px solid rgba(0,0,0,0.05);">
+                                <span style="color:#D9C2A8;margin-right:8px;">✓</span> Estrategia de marketing personalizada
+                            </li>
+                            <li style="padding:12px 0;color:#6B5E51;border-bottom:1px solid rgba(0,0,0,0.05);">
+                                <span style="color:#D9C2A8;margin-right:8px;">✓</span> Recomendaciones de Google Ads
+                            </li>
+                            <li style="padding:12px 0;color:#6B5E51;">
+                                <span style="color:#D9C2A8;margin-right:8px;">✓</span> Reporte completo descargable
+                            </li>
+                        </ul>
+                        <button class="btn-secondary" onclick="document.getElementById('formSection').scrollIntoView({behavior:'smooth'})" style="width:100%;">Comenzar gratis</button>
+                    </div>
+                    <div style="background:#fff;padding:40px;border-radius:16px;box-shadow:0 20px 40px rgba(0,0,0,0.2);position:relative;border:3px solid #D9C2A8;">
+                        <div style="position:absolute;top:-15px;left:50%;transform:translateX(-50%);background:#D9C2A8;color:#fff;padding:6px 20px;border-radius:20px;font-size:0.85rem;font-weight:600;">MÁS POPULAR</div>
+                        <div style="font-size:0.9rem;font-weight:600;color:#D9C2A8;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;margin-top:12px;">Campaña Completa</div>
+                        <div style="font-size:3rem;font-weight:700;color:#6B5E51;margin-bottom:8px;">$720</div>
+                        <div style="color:#6B5E51;opacity:0.7;margin-bottom:24px;">por mes (presupuesto Google Ads)</div>
+                        <ul style="text-align:left;list-style:none;padding:0;margin:0 0 32px 0;">
+                            <li style="padding:12px 0;color:#6B5E51;border-bottom:1px solid rgba(0,0,0,0.05);">
+                                <span style="color:#D9C2A8;margin-right:8px;">✓</span> Todo lo del plan gratuito
+                            </li>
+                            <li style="padding:12px 0;color:#6B5E51;border-bottom:1px solid rgba(0,0,0,0.05);">
+                                <span style="color:#D9C2A8;margin-right:8px;">✓</span> Campañas lanzadas automáticamente
+                            </li>
+                            <li style="padding:12px 0;color:#6B5E51;border-bottom:1px solid rgba(0,0,0,0.05);">
+                                <span style="color:#D9C2A8;margin-right:8px;">✓</span> Optimización continua con IA
+                            </li>
+                            <li style="padding:12px 0;color:#6B5E51;border-bottom:1px solid rgba(0,0,0,0.05);">
+                                <span style="color:#D9C2A8;margin-right:8px;">✓</span> ROI promedio 400%+
+                            </li>
+                            <li style="padding:12px 0;color:#6B5E51;">
+                                <span style="color:#D9C2A8;margin-right:8px;">✓</span> Sin comisiones de agencia
+                            </li>
+                        </ul>
+                        <button class="btn-primary" id="ctaAnalyze" style="width:100%;background:#6B5E51;">Comenzar ahora</button>
+                    </div>
+                </div>
+                <p style="margin-top:32px;color:rgba(255,255,255,0.9);font-size:0.95rem;">💡 El análisis es 100% gratuito. Solo pagas el presupuesto de Google Ads que apruebes.</p>
+            </div>
+
+            <!-- Comparison Section -->
+            <div class="comparison-section" style="background:#F5F5F5;padding:48px;border-radius:20px;border:1px solid rgba(0,0,0,0.05);margin-top:40px;">
+                <h1 style="font-size:2.5rem;margin-bottom:12px;text-align:center;color:#6B5E51;">Caspar vs Agencias Tradicionales</h1>
+                <p class="sub" style="text-align:center;margin-bottom:40px;font-size:1.1rem;">Por qué elegir IA sobre agencias costosas</p>
+                <div style="max-width:1000px;margin:0 auto;overflow-x:auto;">
+                    <table style="width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.05);">
+                        <thead>
+                            <tr style="background:linear-gradient(135deg,#D9C2A8 0%,#cbb296 100%);">
+                                <th style="padding:20px;text-align:left;color:#fff;font-weight:600;"></th>
+                                <th style="padding:20px;text-align:center;color:#fff;font-weight:600;">Caspar</th>
+                                <th style="padding:20px;text-align:center;color:#fff;font-weight:600;">Agencias Tradicionales</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom:1px solid rgba(0,0,0,0.05);">
+                                <td style="padding:16px 20px;font-weight:600;color:#6B5E51;">Costo mensual</td>
+                                <td style="padding:16px 20px;text-align:center;color:#6B5E51;">$0 (solo presupuesto Ads)</td>
+                                <td style="padding:16px 20px;text-align:center;color:#6B5E51;">$2,000 - $5,000+</td>
+                            </tr>
+                            <tr style="border-bottom:1px solid rgba(0,0,0,0.05);background:rgba(217,194,168,0.1);">
+                                <td style="padding:16px 20px;font-weight:600;color:#6B5E51;">Comisiones</td>
+                                <td style="padding:16px 20px;text-align:center;color:#6B5E51;">0%</td>
+                                <td style="padding:16px 20px;text-align:center;color:#6B5E51;">15-20% del presupuesto</td>
+                            </tr>
+                            <tr style="border-bottom:1px solid rgba(0,0,0,0.05);">
+                                <td style="padding:16px 20px;font-weight:600;color:#6B5E51;">Tiempo de inicio</td>
+                                <td style="padding:16px 20px;text-align:center;color:#6B5E51;">5 minutos</td>
+                                <td style="padding:16px 20px;text-align:center;color:#6B5E51;">2-4 semanas</td>
+                            </tr>
+                            <tr style="border-bottom:1px solid rgba(0,0,0,0.05);background:rgba(217,194,168,0.1);">
+                                <td style="padding:16px 20px;font-weight:600;color:#6B5E51;">Optimización</td>
+                                <td style="padding:16px 20px;text-align:center;color:#6B5E51;">Automática 24/7</td>
+                                <td style="padding:16px 20px;text-align:center;color:#6B5E51;">Manual, semanal</td>
+                            </tr>
+                            <tr style="border-bottom:1px solid rgba(0,0,0,0.05);">
+                                <td style="padding:16px 20px;font-weight:600;color:#6B5E51;">Reuniones</td>
+                                <td style="padding:16px 20px;text-align:center;color:#6B5E51;">0</td>
+                                <td style="padding:16px 20px;text-align:center;color:#6B5E51;">Múltiples mensuales</td>
+                            </tr>
+                            <tr style="background:rgba(217,194,168,0.1);">
+                                <td style="padding:16px 20px;font-weight:600;color:#6B5E51;">ROI promedio</td>
+                                <td style="padding:16px 20px;text-align:center;color:#6B5E51;font-weight:700;">400%+</td>
+                                <td style="padding:16px 20px;text-align:center;color:#6B5E51;">200-300%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Case Studies Section -->
+            <div class="case-studies-section" style="background:#F5F5F5;padding:48px;border-radius:20px;border:1px solid rgba(0,0,0,0.05);margin-top:40px;">
+                <h1 style="font-size:2.5rem;margin-bottom:12px;text-align:center;color:#6B5E51;">Casos de estudio detallados</h1>
+                <p class="sub" style="text-align:center;margin-bottom:40px;font-size:1.1rem;">Resultados reales de hoteles que usan Caspar</p>
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(350px,1fr));gap:32px;max-width:1200px;margin:0 auto;">
+                    <div class="case-study-card" style="background:#fff;padding:32px;border-radius:16px;box-shadow:0 8px 24px rgba(0,0,0,0.08);">
+                        <div style="display:flex;align-items:center;gap:16px;margin-bottom:24px;">
+                            <div style="width:64px;height:64px;background:linear-gradient(135deg,#D9C2A8 0%,#cbb296 100%);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;font-weight:700;color:#fff;">HE</div>
+                            <div>
+                                <h3 style="font-size:1.4rem;font-weight:700;color:#6B5E51;margin:0;">Hotel Estelar</h3>
+                                <p style="color:#6B5E51;opacity:0.7;margin:4px 0 0 0;font-size:0.9rem;">Bogotá, Colombia · 45 habitaciones</p>
+                            </div>
+                        </div>
+                        <div style="background:rgba(217,194,168,0.1);padding:20px;border-radius:12px;margin-bottom:24px;">
+                            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                                <div>
+                                    <div style="font-size:0.85rem;color:#6B5E51;opacity:0.7;margin-bottom:4px;">Reservas directas</div>
+                                    <div style="font-size:1.8rem;font-weight:700;color:#6B5E51;">+127%</div>
+                                </div>
+                                <div>
+                                    <div style="font-size:0.85rem;color:#6B5E51;opacity:0.7;margin-bottom:4px;">ROI</div>
+                                    <div style="font-size:1.8rem;font-weight:700;color:#6B5E51;">450%</div>
+                                </div>
+                            </div>
+                        </div>
+                        <h4 style="font-size:1.1rem;font-weight:600;color:#6B5E51;margin-bottom:12px;">Desafío</h4>
+                        <p style="color:#6B5E51;opacity:0.9;line-height:1.6;margin-bottom:16px;">Dependían de OTAs pagando 15-20% de comisión. Necesitaban aumentar reservas directas pero no tenían experiencia en Google Ads.</p>
+                        <h4 style="font-size:1.1rem;font-weight:600;color:#6B5E51;margin-bottom:12px;">Solución</h4>
+                        <p style="color:#6B5E51;opacity:0.9;line-height:1.6;margin-bottom:16px;">Caspar analizó su mercado, creó 3 campañas enfocadas en turismo ecológico y familiar, y las lanzó automáticamente con presupuesto de $720/mes.</p>
+                        <h4 style="font-size:1.1rem;font-weight:600;color:#6B5E51;margin-bottom:12px;">Resultados (6 semanas)</h4>
+                        <ul style="color:#6B5E51;opacity:0.9;line-height:1.8;padding-left:20px;">
+                            <li>Reservas directas aumentaron 127%</li>
+                            <li>ROI de 450% en el primer mes</li>
+                            <li>Ahorro de $1,200/mes en comisiones OTA</li>
+                            <li>3 campañas activas con 27 keywords optimizadas</li>
+                        </ul>
+                    </div>
+                    <div class="case-study-card" style="background:#fff;padding:32px;border-radius:16px;box-shadow:0 8px 24px rgba(0,0,0,0.08);">
+                        <div style="display:flex;align-items:center;gap:16px;margin-bottom:24px;">
+                            <div style="width:64px;height:64px;background:linear-gradient(135deg,#D9C2A8 0%,#cbb296 100%);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;font-weight:700;color:#fff;">BH</div>
+                            <div>
+                                <h3 style="font-size:1.4rem;font-weight:700;color:#6B5E51;margin:0;">Boutique Hotel Cartagena</h3>
+                                <p style="color:#6B5E51;opacity:0.7;margin:4px 0 0 0;font-size:0.9rem;">Cartagena, Colombia · 18 habitaciones</p>
+                            </div>
+                        </div>
+                        <div style="background:rgba(217,194,168,0.1);padding:20px;border-radius:12px;margin-bottom:24px;">
+                            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                                <div>
+                                    <div style="font-size:0.85rem;color:#6B5E51;opacity:0.7;margin-bottom:4px;">Ahorro mensual</div>
+                                    <div style="font-size:1.8rem;font-weight:700;color:#6B5E51;">$2,400</div>
+                                </div>
+                                <div>
+                                    <div style="font-size:0.85rem;color:#6B5E51;opacity:0.7;margin-bottom:4px;">ROI</div>
+                                    <div style="font-size:1.8rem;font-weight:700;color:#6B5E51;">380%</div>
+                                </div>
+                            </div>
+                        </div>
+                        <h4 style="font-size:1.1rem;font-weight:600;color:#6B5E51;margin-bottom:12px;">Desafío</h4>
+                        <p style="color:#6B5E51;opacity:0.9;line-height:1.6;margin-bottom:16px;">Pagaban $3,200/mes a una agencia de marketing que solo generaba resultados limitados. Necesitaban una solución más eficiente.</p>
+                        <h4 style="font-size:1.1rem;font-weight:600;color:#6B5E51;margin-bottom:12px;">Solución</h4>
+                        <p style="color:#6B5E51;opacity:0.9;line-height:1.6;margin-bottom:16px;">Caspar reemplazó a la agencia, creó campañas enfocadas en turismo cultural y patrimonio, con presupuesto optimizado de $800/mes.</p>
+                        <h4 style="font-size:1.1rem;font-weight:600;color:#6B5E51;margin-bottom:12px;">Resultados (3 meses)</h4>
+                        <ul style="color:#6B5E51;opacity:0.9;line-height:1.8;padding-left:20px;">
+                            <li>Ahorro de $2,400/mes vs agencia anterior</li>
+                            <li>ROI de 380% consistente</li>
+                            <li>Optimización automática 24/7</li>
+                            <li>Sin reuniones ni reportes manuales</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
             <!-- FAQ Section -->
             <div class="faq-section" style="background:#F5F5F5;padding:48px;border-radius:20px;border:1px solid rgba(0,0,0,0.05);margin-top:40px;">
                 <h1 style="font-size:2.2rem;margin-bottom:12px;text-align:center;">Preguntas frecuentes</h1>
@@ -895,6 +1082,43 @@
         </div>
     </div>
     
+    <!-- Chat Support Widget -->
+    <div id="chatWidget" style="position:fixed;bottom:20px;right:20px;z-index:1500;">
+        <div id="chatButton" style="width:60px;height:60px;background:linear-gradient(135deg,#D9C2A8 0%,#cbb296 100%);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(107,94,81,0.3);cursor:pointer;transition:transform 0.2s;">
+            <i data-lucide="message-circle" style="width:28px;height:28px;color:#fff;"></i>
+        </div>
+        <div id="chatWindow" style="display:none;position:absolute;bottom:80px;right:0;width:350px;height:500px;background:#fff;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,0.3);overflow:hidden;flex-direction:column;">
+            <div style="background:linear-gradient(135deg,#D9C2A8 0%,#cbb296 100%);padding:20px;color:#fff;">
+                <div style="display:flex;justify-content:space-between;align-items:center;">
+                    <div>
+                        <div style="font-weight:600;font-size:1.1rem;">Soporte Caspar</div>
+                        <div style="font-size:0.85rem;opacity:0.9;">Estamos aquí para ayudarte</div>
+                    </div>
+                    <button id="closeChat" style="background:none;border:none;color:#fff;font-size:24px;cursor:pointer;padding:0;width:32px;height:32px;display:flex;align-items:center;justify-content:center;">×</button>
+                </div>
+            </div>
+            <div id="chatMessages" style="flex:1;padding:20px;overflow-y:auto;background:#F9F6F2;">
+                <div style="background:#fff;padding:12px;border-radius:12px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+                    <div style="font-weight:600;color:#6B5E51;margin-bottom:4px;">Caspar Bot</div>
+                    <div style="color:#6B5E51;opacity:0.9;line-height:1.5;">¡Hola! 👋 Soy el asistente de Caspar. ¿En qué puedo ayudarte hoy?</div>
+                </div>
+            </div>
+            <div style="padding:16px;border-top:1px solid rgba(0,0,0,0.05);background:#fff;">
+                <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
+                    <button class="quick-question" style="padding:8px 12px;background:rgba(217,194,168,0.2);border:1px solid rgba(217,194,168,0.4);border-radius:8px;font-size:0.85rem;color:#6B5E51;cursor:pointer;">¿Cómo funciona?</button>
+                    <button class="quick-question" style="padding:8px 12px;background:rgba(217,194,168,0.2);border:1px solid rgba(217,194,168,0.4);border-radius:8px;font-size:0.85rem;color:#6B5E51;cursor:pointer;">¿Cuánto cuesta?</button>
+                    <button class="quick-question" style="padding:8px 12px;background:rgba(217,194,168,0.2);border:1px solid rgba(217,194,168,0.4);border-radius:8px;font-size:0.85rem;color:#6B5E51;cursor:pointer;">Empezar prueba</button>
+                </div>
+                <div style="display:flex;gap:8px;">
+                    <input type="text" id="chatInput" placeholder="Escribe tu pregunta..." style="flex:1;padding:12px;border:1px solid rgba(0,0,0,0.1);border-radius:8px;font-size:0.9rem;">
+                    <button id="sendChat" style="padding:12px 20px;background:linear-gradient(135deg,#D9C2A8 0%,#cbb296 100%);color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:600;">
+                        <i data-lucide="send" style="width:18px;height:18px;"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Mobile sticky CTA for conversion -->
     <div class="mobile-sticky-cta" style="position:fixed;left:0;right:0;bottom:0;background:rgba(249,246,242,0.94);border-top:1px solid rgba(0,0,0,0.06);padding:10px 16px;display:none;z-index:1000;">
         <button id="mobileStartCTA" class="btn-primary" style="width:100%;" aria-label="Empieza gratis con IA (móvil)">🚀 Empieza gratis con IA</button>
@@ -1117,6 +1341,101 @@
             idx = (idx + 1) % steps.length;
             if (loopLine) loopLine.textContent = steps[idx];
         }, 3500);
+
+        // Chat Widget functionality
+        const chatButton = document.getElementById('chatButton');
+        const chatWindow = document.getElementById('chatWindow');
+        const closeChat = document.getElementById('closeChat');
+        const chatInput = document.getElementById('chatInput');
+        const sendChat = document.getElementById('sendChat');
+        const chatMessages = document.getElementById('chatMessages');
+        const quickQuestions = document.querySelectorAll('.quick-question');
+
+        function toggleChat() {
+            const isVisible = chatWindow.style.display === 'flex';
+            chatWindow.style.display = isVisible ? 'none' : 'flex';
+            if (!isVisible) {
+                chatInput.focus();
+                if (window.lucide) window.lucide.createIcons();
+            }
+        }
+
+        if (chatButton) chatButton.addEventListener('click', toggleChat);
+        if (closeChat) closeChat.addEventListener('click', toggleChat);
+
+        function addMessage(text, isUser = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.style.cssText = 'background:#fff;padding:12px;border-radius:12px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,0.05);';
+            messageDiv.innerHTML = `
+                <div style="font-weight:600;color:#6B5E51;margin-bottom:4px;">${isUser ? 'Tú' : 'Caspar Bot'}</div>
+                <div style="color:#6B5E51;opacity:0.9;line-height:1.5;">${text}</div>
+            `;
+            if (chatMessages) {
+                chatMessages.appendChild(messageDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+        }
+
+        function getBotResponse(userMessage) {
+            const lowerMessage = userMessage.toLowerCase();
+            if (lowerMessage.includes('cómo funciona') || lowerMessage.includes('como funciona')) {
+                return 'Caspar analiza tu hotel en menos de 5 minutos, crea una estrategia personalizada y lanza campañas en Google Ads automáticamente. Todo sin necesidad de experiencia técnica. ¿Quieres ver el video explicativo arriba?';
+            } else if (lowerMessage.includes('costo') || lowerMessage.includes('precio') || lowerMessage.includes('cuánto')) {
+                return 'El análisis es completamente gratuito. Solo pagas el presupuesto de Google Ads que apruebes (típicamente $720/mes). Sin comisiones, sin costos ocultos. ¿Te gustaría ver nuestros planes en la sección de precios?';
+            } else if (lowerMessage.includes('empezar') || lowerMessage.includes('prueba') || lowerMessage.includes('comenzar')) {
+                return '¡Perfecto! Puedes hacer una prueba gratuita completando el formulario. Haz clic en "Haz una prueba" en la parte superior o desplázate al formulario. ¿Necesitas ayuda con algo más?';
+            } else if (lowerMessage.includes('tiempo') || lowerMessage.includes('cuánto tarda')) {
+                return 'Recibirás tu análisis completo en menos de 5 minutos. Si apruebas la estrategia, las campañas se lanzan automáticamente. ¡Es así de rápido!';
+            } else {
+                return 'Gracias por tu pregunta. Puedo ayudarte con información sobre cómo funciona Caspar, precios, o cómo empezar. También puedes contactarnos en support@marketingagent.com';
+            }
+        }
+
+        function sendChatMessage() {
+            if (!chatInput) return;
+            const message = chatInput.value.trim();
+            if (!message) return;
+            
+            addMessage(message, true);
+            chatInput.value = '';
+            
+            setTimeout(() => {
+                const response = getBotResponse(message);
+                addMessage(response);
+                if (window.lucide) window.lucide.createIcons();
+            }, 500);
+        }
+
+        if (sendChat) sendChat.addEventListener('click', sendChatMessage);
+        if (chatInput) {
+            chatInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') sendChatMessage();
+            });
+        }
+
+        if (quickQuestions.length > 0) {
+            quickQuestions.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const question = btn.textContent;
+                    addMessage(question, true);
+                    setTimeout(() => {
+                        const response = getBotResponse(question);
+                        addMessage(response);
+                        if (window.lucide) window.lucide.createIcons();
+                    }, 500);
+                });
+            });
+        }
+
+        // Hover effect for chat button
+        if (chatButton) {
+            chatButton.addEventListener('mouseenter', () => {
+                chatButton.style.transform = 'scale(1.1)';
+            });
+            chatButton.addEventListener('mouseleave', () => {
+                chatButton.style.transform = 'scale(1)';
+            });
+        }
 
         // Trial Modal event listeners
         if (trialCancel) {
