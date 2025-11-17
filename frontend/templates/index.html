@@ -1037,14 +1037,43 @@
             trialSubmit.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
 
             try {
+                // First, check if backend is available
+                if (!API_BASE) {
+                    throw new Error('Backend URL no configurada. Por favor, configura BACKEND_URL en el código.');
+                }
+                
                 // Send trial data to backend
-                const response = await fetch(apiUrl('/trial'), {
+                const headers = {
+                    'Content-Type': 'application/json',
+                };
+                
+                // Add ngrok-skip-browser-warning header if using ngrok
+                if (API_BASE.includes('ngrok')) {
+                    headers['ngrok-skip-browser-warning'] = 'true';
+                }
+                
+                const trialUrl = apiUrl('/trial');
+                console.log('Sending request to:', trialUrl);
+                console.log('Request data:', trialData);
+                
+                const response = await fetch(trialUrl, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(trialData)
+                    headers: headers,
+                    body: JSON.stringify(trialData),
+                    mode: 'cors',
+                    credentials: 'omit'
                 });
+                
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    let errorData;
+                    try {
+                        errorData = JSON.parse(errorText);
+                    } catch {
+                        errorData = { error: errorText || `HTTP ${response.status}: ${response.statusText}` };
+                    }
+                    throw new Error(errorData.error || errorData.message || `Error ${response.status}`);
+                }
                 
                 const result = await response.json();
                 
@@ -1106,7 +1135,17 @@
                 
             } catch (error) {
                 console.error('Error submitting trial form:', error);
-                alert('❌ Error al enviar el formulario: ' + (error.message || 'Por favor, intenta de nuevo.'));
+                console.error('API URL:', apiUrl('/trial'));
+                console.error('API BASE:', API_BASE);
+                
+                let errorMessage = 'Error al enviar el formulario. ';
+                if (error.message.includes('Failed to fetch') || error.message.includes('ERR_FAILED')) {
+                    errorMessage += 'No se pudo conectar con el servidor. Verifica que el backend esté corriendo y que la URL sea correcta.';
+                } else {
+                    errorMessage += error.message || 'Por favor, intenta de nuevo.';
+                }
+                
+                alert('❌ ' + errorMessage);
             } finally {
                 // Reset button state
                 trialSubmit.disabled = false;

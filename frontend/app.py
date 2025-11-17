@@ -43,7 +43,7 @@ CORS(app, resources={
     r"/*": {
         "origins": ["*"],  # Allow all origins (ngrok requires this)
         "methods": ["GET", "POST", "OPTIONS"],
-        "allow_headers": ["Content-Type", "Authorization", "X-Requested-With"],
+        "allow_headers": ["Content-Type", "Authorization", "X-Requested-With", "ngrok-skip-browser-warning"],
         "supports_credentials": False
     }
 })
@@ -59,7 +59,7 @@ def handle_cors_preflight():
         resp.headers['Access-Control-Allow-Origin'] = origin if origin else '*'
         resp.headers['Vary'] = 'Origin'
         resp.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
-        resp.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization, X-Requested-With'
+        resp.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization, X-Requested-With, ngrok-skip-browser-warning'
         resp.headers['Access-Control-Allow-Credentials'] = 'false'
         resp.headers['Access-Control-Max-Age'] = '3600'
         return resp
@@ -71,7 +71,7 @@ def add_cors_headers(response):
     response.headers['Access-Control-Allow-Origin'] = origin if origin else '*'
     response.headers['Vary'] = 'Origin'
     response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
-    response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization, X-Requested-With'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization, X-Requested-With, ngrok-skip-browser-warning'
     response.headers['Access-Control-Allow-Credentials'] = 'false'
     return response
 
