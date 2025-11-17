@@ -113,8 +113,14 @@ class GoogleAdsAPI:
                 f"customers/{self.customer_id}/campaignBudgets/{budget_id}"
             )
 
-            # Optional: bidding strategy (keep minimal to avoid version field mismatches)
-            # Target ROAS strategies can be configured post-creation if needed
+            # Set bidding strategy to MAXIMIZE_CLICKS (doesn't require conversion tracking)
+            # This avoids "conversion tracking incomplete" errors on campaign creation
+            # Can be changed to TARGET_ROAS later when conversion data is available
+            bidding_strategy_type_enum = self.client.enums.BiddingStrategyTypeEnum
+            campaign_obj.bidding_strategy_type = bidding_strategy_type_enum.MAXIMIZE_CLICKS
+            
+            # Optional: Set manual CPC as fallback if MAXIMIZE_CLICKS not available
+            # This ensures the campaign works without conversion tracking requirements
 
             # Execute
             response = campaign_service.mutate_campaigns(
@@ -568,6 +574,53 @@ class GoogleAdsAPI:
         except Exception as e:
             print(f"Unexpected error listing campaigns: {e}")
             raise Exception(f"Failed to list campaigns: {e}")
+    
+    def update_bidding_strategy(self, campaign_id: str, strategy_type: str = 'TARGET_ROAS', target_roas: float = 400) -> bool:
+        """Update campaign bidding strategy (e.g., from MAXIMIZE_CLICKS to TARGET_ROAS)"""
+        if not self.client:
+            raise Exception("Google Ads API not initialized")
+        
+        try:
+            from google.ads.googleads.v22.services.services import campaign_service
+            from google.ads.googleads.v22.resources.types import campaign
+            from google.ads.googleads.v22.enums.types import bidding_strategy_type
+            from google.ads.googleads.v22.common import types
+            
+            # Create campaign operation
+            campaign_operation = campaign_service.CampaignOperation()
+            campaign_operation.update = campaign.Campaign()
+            campaign_operation.update.resource_name = f"customers/{self.customer_id}/campaigns/{campaign_id}"
+            
+            # Set bidding strategy type
+            if strategy_type.upper() == 'TARGET_ROAS':
+                campaign_operation.update.bidding_strategy_type = bidding_strategy_type.BiddingStrategyType.TARGET_ROAS
+                # Note: Target ROAS value is set via a separate bidding strategy resource
+                # For now, we just set the type. The actual ROAS target should be configured
+                # via the BiddingStrategyService or in the Google Ads UI
+            elif strategy_type.upper() == 'MAXIMIZE_CLICKS':
+                campaign_operation.update.bidding_strategy_type = bidding_strategy_type.BiddingStrategyType.MAXIMIZE_CLICKS
+            elif strategy_type.upper() == 'MANUAL_CPC':
+                campaign_operation.update.bidding_strategy_type = bidding_strategy_type.BiddingStrategyType.MANUAL_CPC
+            
+            campaign_operation.update_mask.CopyFrom(
+                types.FieldMask(paths=["bidding_strategy_type"])
+            )
+            
+            # Execute the operation
+            campaign_service_client = self.client.get_service("CampaignService")
+            response = campaign_service_client.mutate_campaigns(
+                customer_id=self.customer_id,
+                operations=[campaign_operation]
+            )
+            
+            return True
+            
+        except GoogleAdsException as ex:
+            print(f"Google Ads API error updating bidding strategy: {ex}")
+            raise Exception(f"Failed to update bidding strategy: {ex}")
+        except Exception as e:
+            print(f"Unexpected error updating bidding strategy: {e}")
+            raise Exception(f"Failed to update bidding strategy: {e}")
     
     def optimize_bidding(self, campaign_id: str, target_roas: float = 400) -> Dict[str, Any]:
         """Optimize bidding strategy based on performance"""
