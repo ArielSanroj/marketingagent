@@ -1264,16 +1264,53 @@
             
             statusCheckInterval = setInterval(async () => {
                 try {
-                    const response = await fetch(apiUrl(`/status/${currentRequestId}`));
+                    const statusUrl = apiUrl(`/status/${currentRequestId}`);
+                    const response = await fetch(statusUrl, {
+                        headers: API_BASE.includes('ngrok') ? { 'ngrok-skip-browser-warning': 'true' } : {}
+                    });
+                    
                     const contentType = response.headers.get('content-type') || '';
                     const raw = await response.text();
                     let status;
+                    
+                    // Check if response is JSON
                     if (contentType.includes('application/json')) {
-                        status = JSON.parse(raw);
+                        try {
+                            status = JSON.parse(raw);
+                        } catch (parseError) {
+                            console.error('Failed to parse JSON response:', parseError);
+                            console.error('Response body:', raw.slice(0, 500));
+                            return; // wait for next poll
+                        }
                     } else {
-                        console.warn('Status endpoint returned non-JSON. Body (first 200 chars):', raw.slice(0, 200));
+                        // If not JSON, check if it's an HTML error page
+                        if (raw.includes('<!DOCTYPE') || raw.includes('<html')) {
+                            console.error('Server returned HTML instead of JSON. This might indicate:');
+                            console.error('1. The request_id does not exist (server restarted?)');
+                            console.error('2. Ngrok is intercepting the request');
+                            console.error('3. Server error');
+                            console.error('Response (first 500 chars):', raw.slice(0, 500));
+                            
+                            // Try to extract error message from HTML if possible
+                            const errorMatch = raw.match(/<pre>(.*?)<\/pre>/i) || raw.match(/<title>(.*?)<\/title>/i);
+                            if (errorMatch) {
+                                console.error('Error from HTML:', errorMatch[1]);
+                            }
+                            
+                            // Stop polling if we keep getting HTML
+                            const errorCount = window.statusErrorCount || 0;
+                            window.statusErrorCount = errorCount + 1;
+                            
+                            if (errorCount > 5) {
+                                clearInterval(statusCheckInterval);
+                                showError('No se pudo obtener el estado del análisis. El servidor puede haber sido reiniciado.');
+                            }
+                        }
                         return; // wait for next poll
                     }
+                    
+                    // Reset error count on successful JSON response
+                    window.statusErrorCount = 0;
                     
                     if (response.ok) {
                         updateStatus(status);
@@ -1287,9 +1324,20 @@
                         }
                     } else {
                         console.warn('Status HTTP error:', response.status, status);
+                        if (response.status === 404) {
+                            clearInterval(statusCheckInterval);
+                            showError('El análisis no fue encontrado. Puede que el servidor haya sido reiniciado.');
+                        }
                     }
                 } catch (error) {
                     console.error('Status check error:', error);
+                    const errorCount = window.statusErrorCount || 0;
+                    window.statusErrorCount = errorCount + 1;
+                    
+                    if (errorCount > 10) {
+                        clearInterval(statusCheckInterval);
+                        showError('Error de conexión al verificar el estado. Por favor, recarga la página.');
+                    }
                 }
             }, 2000);
         }
