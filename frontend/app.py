@@ -3,6 +3,7 @@ tphagent Frontend - Simple Web Interface
 Allows users to input email and hotel URL/Instagram for marketing strategy analysis
 """
 from flask import Flask, render_template, request, jsonify, send_file
+from flask_cors import CORS
 import os
 import sys
 import json
@@ -37,6 +38,43 @@ logger = get_logger(__name__)
 
 app = Flask(__name__)
 
+# Enable CORS for Vercel frontend - Allow all origins for ngrok compatibility
+CORS(app, resources={
+    r"/*": {
+        "origins": ["*"],  # Allow all origins (ngrok requires this)
+        "methods": ["GET", "POST", "OPTIONS"],
+        "allow_headers": ["Content-Type", "Authorization", "X-Requested-With"],
+        "supports_credentials": False
+    }
+})
+
+# Explicitly handle CORS preflight and attach headers to every response
+@app.before_request
+def handle_cors_preflight():
+    # Short-circuit preflight requests early - MUST return before rate limiting
+    if request.method == 'OPTIONS':
+        resp = app.make_response(('', 204))
+        # Allow all origins for ngrok compatibility
+        origin = request.headers.get('Origin', '*')
+        resp.headers['Access-Control-Allow-Origin'] = origin if origin else '*'
+        resp.headers['Vary'] = 'Origin'
+        resp.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
+        resp.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization, X-Requested-With'
+        resp.headers['Access-Control-Allow-Credentials'] = 'false'
+        resp.headers['Access-Control-Max-Age'] = '3600'
+        return resp
+
+@app.after_request
+def add_cors_headers(response):
+    # Add CORS headers to all responses
+    origin = request.headers.get('Origin', '*')
+    response.headers['Access-Control-Allow-Origin'] = origin if origin else '*'
+    response.headers['Vary'] = 'Origin'
+    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization, X-Requested-With'
+    response.headers['Access-Control-Allow-Credentials'] = 'false'
+    return response
+
 # Initialize rate limiting and security
 rate_limiter = get_rate_limiter()
 ddos_protection = get_ddos_protection()
@@ -49,6 +87,9 @@ processing_status = {}
 @app.before_request
 def rate_limit_check():
     """Check rate limits before processing request"""
+    # Let CORS preflight pass through without any checks
+    if request.method == 'OPTIONS':
+        return None
     ip_address = request.remote_addr
     user_agent = request.headers.get('User-Agent', '')
     endpoint = request.endpoint or 'unknown'
@@ -125,6 +166,119 @@ def dashboard():
     """Admin dashboard page"""
     return render_template('dashboard.html')
 
+@app.route('/trial', methods=['POST'])
+@log_performance
+def save_trial_data():
+    """Save trial user data and optionally start analysis"""
+    try:
+        data = request.get_json()
+        
+        # Extract trial data
+        nombre = data.get('nombre', '').strip()
+        apellido = data.get('apellido', '').strip()
+        hotel_nombre = data.get('hotel_nombre', '').strip()
+        instagram = data.get('instagram', '').strip()
+        web = data.get('web', '').strip()
+        correo = data.get('correo', '').strip()
+        telefono = data.get('telefono', '').strip()
+        
+        # Validate required fields
+        if not all([nombre, apellido, hotel_nombre, web, correo, telefono]):
+            return jsonify({
+                'success': False,
+                'error': 'Missing required fields'
+            }), 400
+        
+        # Format Instagram URL if provided
+        instagram_url = None
+        if instagram:
+            if not instagram.startswith('http'):
+                if instagram.startswith('@'):
+                    instagram_url = f'https://instagram.com/{instagram[1:]}'
+                else:
+                    instagram_url = f'https://instagram.com/{instagram}'
+            else:
+                instagram_url = instagram
+        
+        # Store trial data (in production, save to database)
+        trial_data = {
+            'nombre': nombre,
+            'apellido': apellido,
+            'hotel_nombre': hotel_nombre,
+            'instagram': instagram_url,
+            'web': web,
+            'correo': correo,
+            'telefono': telefono,
+            'timestamp': datetime.now().isoformat()
+        }
+        
+        # Log trial data save
+        logger.info("Trial data saved", extra={
+            'category': 'business',
+            'ip_address': request.remote_addr,
+            'user_agent': request.headers.get('User-Agent'),
+            'metadata': {
+                'event_type': 'trial_data_saved',
+                'hotel_name': hotel_nombre,
+                'email': correo
+            }
+        })
+        
+        # Save to file (in production, save to database)
+        os.makedirs('outputs/trials', exist_ok=True)
+        trial_filename = f"trial_{correo.replace('@', '_at_')}_{int(time.time())}.json"
+        trial_filepath = f"outputs/trials/{trial_filename}"
+        
+        with open(trial_filepath, 'w', encoding='utf-8') as f:
+            json.dump(trial_data, f, indent=2, ensure_ascii=False)
+        
+        # Optionally start analysis automatically
+        auto_start = data.get('auto_start_analysis', True)
+        
+        if auto_start:
+            # Start analysis with trial data
+            request_id = f"req_{int(time.time())}"
+            
+            # Start processing in background
+            thread = threading.Thread(
+                target=process_hotel_analysis, 
+                args=(request_id, correo, web, instagram_url, None)
+            )
+            thread.daemon = True
+            thread.start()
+            
+            # Set initial status
+            processing_status[request_id] = {
+                'status': 'processing',
+                'message': 'Starting analysis...',
+                'progress': 10,
+                'start_time': time.time()
+            }
+            
+            return jsonify({
+                'success': True,
+                'message': 'Trial data saved and analysis started',
+                'request_id': request_id,
+                'trial_data': trial_data
+            })
+        else:
+            return jsonify({
+                'success': True,
+                'message': 'Trial data saved successfully',
+                'trial_data': trial_data
+            })
+            
+    except Exception as e:
+        logger.error(f"Error saving trial data: {str(e)}", extra={
+            'category': 'system',
+            'event_type': 'trial_error',
+            'error': str(e)
+        })
+        return jsonify({
+            'success': False,
+            'error': f'Error saving trial data: {str(e)}'
+        }), 500
+
 @app.route('/analyze', methods=['POST'])
 @log_performance
 def analyze_hotel():
@@ -188,7 +342,8 @@ def analyze_hotel():
         processing_status[request_id] = {
             'status': 'processing',
             'message': 'Starting analysis...',
-            'progress': 10
+            'progress': 10,
+            'start_time': time.time()
         }
         
         return jsonify({
@@ -204,13 +359,19 @@ def analyze_hotel():
 def get_status(request_id):
     """Get processing status with performance metrics"""
     if request_id not in processing_status:
-        return jsonify({'error': 'Request not found'}), 404
+        return jsonify({
+            'status': 'not_found',
+            'message': 'Request not found or has expired',
+            'progress': 0,
+            'request_id': request_id
+        })
     
     status = processing_status[request_id].copy()
     
     # Add performance metrics
     if 'start_time' not in status:
         status['start_time'] = time.time()
+        processing_status[request_id]['start_time'] = status['start_time']
     
     status['elapsed_time'] = round(time.time() - status['start_time'], 2)
     
@@ -966,12 +1127,16 @@ if __name__ == '__main__':
     # Create outputs directory if it doesn't exist
     os.makedirs('outputs', exist_ok=True)
     
+    # Get port from environment (Render/Railway provide PORT env var) or default to 15000
+    port = int(os.getenv('PORT', 15000))
+    # Use 0.0.0.0 for production (Render/Railway) or 127.0.0.1 for local
+    # Use 0.0.0.0 to allow ngrok and external connections
+    host = os.getenv('HOST', '0.0.0.0')
+    
     print("🚀 Starting tphagent Frontend Server...")
     print("📧 Email: arielsanroj@carmanfe.com.co")
-    print("🌐 Server: http://127.0.0.1:15000")
-    print("🌐 Alternative: http://localhost:15000")
+    print(f"🌐 Server: http://{host}:{port}")
     print()
-    print("💡 Note: Using port 15000 as requested")
     print("⚡ Performance optimizations enabled:")
     print("  • Parallel processing for hotel/Instagram analysis")
     print("  • Connection pooling and caching")
@@ -987,6 +1152,5 @@ if __name__ == '__main__':
         MAX_CONTENT_LENGTH=16 * 1024 * 1024,  # 16MB max file size
     )
     
-    # Use port 15000 as requested
     # Use threaded=True for better concurrent request handling
-    app.run(debug=False, host='127.0.0.1', port=15000, threaded=True, processes=1)
+    app.run(debug=False, host=host, port=port, threaded=True, processes=1)

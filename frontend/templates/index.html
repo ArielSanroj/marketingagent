@@ -163,6 +163,9 @@
         .btn-secondary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.06); }
         .microcopy { font-size: 0.85rem; color: #6B5E51; opacity: 0.85; margin-top: 8px; }
         
+        /* Modal close button hover */
+        #trialModalClose:hover { background: rgba(107,94,81,0.1); }
+        
         .main-content {
             display: grid;
             grid-template-columns: 1fr;
@@ -521,7 +524,9 @@
             .logo-sub { font-size: 0.8rem; letter-spacing: 4px; }
             .logo-container { padding: 20px 30px; }
             .form-section, .features-section { padding: 30px 20px; } 
-            .nav-links { position: static; justify-content: center; margin-bottom: 30px; } 
+            .nav-links { position: static; justify-content: center; margin-bottom: 30px; }
+            #trialModal > div { padding: 24px 20px; width: 95%; }
+            #trialModal h2 { font-size: 1.5rem; }
         }
         @media (max-width: 480px) {
             .container { padding: 10px; } 
@@ -684,7 +689,7 @@
                             </button>
                             <button class="campaign-btn" id="campaignBtn">
                                 <i data-lucide="rocket"></i> Start Campaign
-                            </button>
+                        </button>
                         </div>
                     </div>
                     <div class="results-content" id="resultsContent">
@@ -780,6 +785,72 @@
         <button id="mobileStartCTA" class="btn-primary" style="width:100%;" aria-label="Empieza gratis con IA (móvil)">🚀 Empieza gratis con IA</button>
     </div>
 
+    <!-- Trial Modal -->
+    <div id="trialModal" aria-hidden="true" role="dialog" aria-labelledby="trialModalTitle" style="position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.4);z-index:2000;overflow-y:auto;padding:20px;">
+        <div style="background:#fff;border-radius:16px;max-width:640px;width:92%;padding:32px;border:1px solid rgba(0,0,0,0.08);box-shadow:0 20px 50px rgba(0,0,0,0.2);margin:auto;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+                <h2 id="trialModalTitle" style="margin:0;color:#6B5E51;font-size:1.8rem;">Haz una prueba</h2>
+                <button id="trialModalClose" style="background:none;border:none;font-size:24px;color:#6B5E51;cursor:pointer;padding:0;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:background 0.2s;" aria-label="Cerrar modal">×</button>
+            </div>
+            <p style="margin-bottom:24px;color:#6B5E51;opacity:0.9;">Completa el formulario para obtener tu análisis gratuito y lanzar tu primera campaña con IA.</p>
+            <form id="trialForm">
+                <div class="form-group">
+                    <label for="trial_nombre">
+                        <i data-lucide="user"></i> Nombre *
+                    </label>
+                    <input type="text" id="trial_nombre" name="nombre" required placeholder="Tu nombre">
+                </div>
+                
+                <div class="form-group">
+                    <label for="trial_apellido">
+                        <i data-lucide="user"></i> Apellido *
+                    </label>
+                    <input type="text" id="trial_apellido" name="apellido" required placeholder="Tu apellido">
+                </div>
+                
+                <div class="form-group">
+                    <label for="trial_hotel_nombre">
+                        <i data-lucide="building-2"></i> Nombre Hotel *
+                    </label>
+                    <input type="text" id="trial_hotel_nombre" name="hotel_nombre" required placeholder="Nombre de tu hotel">
+                </div>
+                
+                <div class="form-group">
+                    <label for="trial_instagram">
+                        <i data-lucide="instagram"></i> Instagram Hotel
+                    </label>
+                    <input type="text" id="trial_instagram" name="instagram" placeholder="@tu_hotel o https://instagram.com/tu_hotel">
+                </div>
+                
+                <div class="form-group">
+                    <label for="trial_web">
+                        <i data-lucide="globe"></i> Página Web Hotel *
+                    </label>
+                    <input type="url" id="trial_web" name="web" required placeholder="https://tu-hotel.com">
+                </div>
+                
+                <div class="form-group">
+                    <label for="trial_correo">
+                        <i data-lucide="mail"></i> Correo *
+                    </label>
+                    <input type="email" id="trial_correo" name="correo" required placeholder="tu@email.com">
+                </div>
+                
+                <div class="form-group">
+                    <label for="trial_telefono">
+                        <i data-lucide="phone"></i> Teléfono *
+                    </label>
+                    <input type="tel" id="trial_telefono" name="telefono" required placeholder="+57 300 123 4567">
+                </div>
+                
+                <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:24px;">
+                    <button type="button" id="trialCancel" class="btn-secondary">Cancelar</button>
+                    <button type="submit" id="trialSubmit" class="btn-primary">Enviar y comenzar prueba</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Google Ads Credentials Modal -->
     <div id="gaModal" aria-hidden="true" role="dialog" aria-labelledby="gaModalTitle" style="position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.4);z-index:2000;">
         <div style="background:#fff;border-radius:16px;max-width:640px;width:92%;padding:22px;border:1px solid rgba(0,0,0,0.08);box-shadow:0 20px 50px rgba(0,0,0,0.2);">
@@ -820,12 +891,13 @@
         "description": "Estrategias de marketing con IA y campañas en Google Ads"
       }
     }
-        // Initialize Lucide icons
+    </script>
+    <script>
         if (window.lucide && typeof window.lucide.createIcons === 'function') {
             window.lucide.createIcons();
         }
     </script>
-
+    
     <script>
         // ============================================
         // 🔗 CONFIGURACIÓN DEL BACKEND
@@ -861,6 +933,37 @@
         // Demo mode toggle
         let demoMode = false;
 
+        // Trial Modal logic - Define early so it can be used by button handlers
+        const trialModal = document.getElementById('trialModal');
+        const trialForm = document.getElementById('trialForm');
+        const trialCancel = document.getElementById('trialCancel');
+        const trialModalClose = document.getElementById('trialModalClose');
+        const trialSubmit = document.getElementById('trialSubmit');
+
+        function openTrialModal() {
+            if (!trialModal) {
+                console.error('Trial modal not found');
+                return;
+            }
+            trialModal.style.display = 'flex';
+            trialModal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            // Initialize icons after a short delay to ensure DOM is ready
+            setTimeout(() => {
+                if (window.lucide && typeof window.lucide.createIcons === 'function') {
+                    window.lucide.createIcons();
+                }
+            }, 100);
+        }
+
+        function closeTrialModal() {
+            if (!trialModal) return;
+            trialModal.style.display = 'none';
+            trialModal.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = ''; // Restore scrolling
+            if (trialForm) trialForm.reset(); // Reset form
+        }
+
         if (ctaAnalyze) {
             ctaAnalyze.addEventListener('click', () => {
                 // Open Google Ads credentials modal instead of only scrolling
@@ -869,10 +972,10 @@
         }
 
         if (ctaExample) {
-            ctaExample.addEventListener('click', () => {
-                demoMode = true;
-                const el = document.getElementById('formSection');
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
+            ctaExample.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                openTrialModal();
             });
         }
 
@@ -899,6 +1002,117 @@
             idx = (idx + 1) % steps.length;
             if (loopLine) loopLine.textContent = steps[idx];
         }, 3500);
+
+        // Trial Modal event listeners
+        if (trialCancel) {
+            trialCancel.addEventListener('click', closeTrialModal);
+        }
+        if (trialModalClose) {
+            trialModalClose.addEventListener('click', closeTrialModal);
+        }
+        if (trialModal) {
+            trialModal.addEventListener('click', (e) => {
+                if (e.target === trialModal) closeTrialModal();
+            });
+        }
+
+        // Handle form submission
+        trialForm?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(trialForm);
+            const trialData = {
+                nombre: formData.get('nombre'),
+                apellido: formData.get('apellido'),
+                hotel_nombre: formData.get('hotel_nombre'),
+                instagram: formData.get('instagram'),
+                web: formData.get('web'),
+                correo: formData.get('correo'),
+                telefono: formData.get('telefono'),
+                auto_start_analysis: true  // Automatically start analysis after saving
+            };
+
+            // Show loading state
+            trialSubmit.disabled = true;
+            trialSubmit.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+
+            try {
+                // Send trial data to backend
+                const response = await fetch(apiUrl('/trial'), {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(trialData)
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok && result.success) {
+                    // Store data in localStorage for later use
+                    localStorage.setItem('trial_user_data', JSON.stringify(trialData));
+                    
+                    // Close modal
+                    closeTrialModal();
+                    demoMode = true;
+                    
+                    // If analysis was started automatically, show status
+                    if (result.request_id) {
+                        currentRequestId = result.request_id;
+                        showStatusSection();
+                        startStatusCheck();
+                        
+                        // Scroll to status section
+                        const statusEl = document.getElementById('statusSection');
+                        if (statusEl) {
+                            statusEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                    } else {
+                        // Pre-fill the main form with trial data
+                        const emailInput = document.getElementById('email');
+                        const hotelUrlInput = document.getElementById('hotel_url');
+                        const instagramUrlInput = document.getElementById('instagram_url');
+                        
+                        if (emailInput) emailInput.value = trialData.correo;
+                        if (hotelUrlInput) hotelUrlInput.value = trialData.web;
+                        if (instagramUrlInput && trialData.instagram) {
+                            // Format Instagram URL if needed
+                            let instagramUrl = trialData.instagram;
+                            if (!instagramUrl.startsWith('http')) {
+                                if (instagramUrl.startsWith('@')) {
+                                    instagramUrl = 'https://instagram.com/' + instagramUrl.substring(1);
+                                } else {
+                                    instagramUrl = 'https://instagram.com/' + instagramUrl;
+                                }
+                            }
+                            instagramUrlInput.value = instagramUrl;
+                        }
+                        
+                        // Scroll to form section
+                        const el = document.getElementById('formSection');
+                        if (el) el.scrollIntoView({ behavior: 'smooth' });
+                    }
+                    
+                    // Show success message
+                    if (result.request_id) {
+                        // Analysis started automatically
+                        // Status will be shown in the status section
+                    } else {
+                        alert('✅ Datos guardados correctamente. Ahora puedes completar el análisis.');
+                    }
+                } else {
+                    throw new Error(result.error || 'Error al guardar los datos');
+                }
+                
+            } catch (error) {
+                console.error('Error submitting trial form:', error);
+                alert('❌ Error al enviar el formulario: ' + (error.message || 'Por favor, intenta de nuevo.'));
+            } finally {
+                // Reset button state
+                trialSubmit.disabled = false;
+                trialSubmit.innerHTML = 'Enviar y comenzar prueba';
+            }
+        });
 
         // Google Ads Modal logic
         const gaModal = document.getElementById('gaModal');
@@ -1012,7 +1226,15 @@
             statusCheckInterval = setInterval(async () => {
                 try {
                     const response = await fetch(apiUrl(`/status/${currentRequestId}`));
-                    const status = await response.json();
+                    const contentType = response.headers.get('content-type') || '';
+                    const raw = await response.text();
+                    let status;
+                    if (contentType.includes('application/json')) {
+                        status = JSON.parse(raw);
+                    } else {
+                        console.warn('Status endpoint returned non-JSON. Body (first 200 chars):', raw.slice(0, 200));
+                        return; // wait for next poll
+                    }
                     
                     if (response.ok) {
                         updateStatus(status);
@@ -1024,6 +1246,8 @@
                             clearInterval(statusCheckInterval);
                             showError(status.message || 'Analysis failed.');
                         }
+                    } else {
+                        console.warn('Status HTTP error:', response.status, status);
                     }
                 } catch (error) {
                     console.error('Status check error:', error);
@@ -1451,7 +1675,7 @@ Generated on ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeStri
             }
             
             // Get the current analysis results
-            fetch(`/status/${currentRequestId}`)
+            fetch(apiUrl(`/status/${currentRequestId}`))
                 .then(response => response.json())
                 .then(data => {
                     if (data.status === 'completed' && data.results) {
